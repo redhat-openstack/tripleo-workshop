@@ -19,3 +19,20 @@ works so that it could be described as the following:
 To appreciate the difference of the above, we'll do a two-node
 deployment but instead of having Mistral execute the last two steps, 
 we will pass the tripleo client options so that we run them manually.
+
+To complete the lab read and run deploy.sh. Answer the optional
+questions to test your understanding.
+
+- Read [deploy.sh](deploy.sh) and execute it so that only the HEAT section runs
+- While the deployment is running, observe the difference between the Queens and Master (Rocky) versions:
+  - In Queens what does '--config-download' do?
+  - In Queens what does config-download-environment.yaml do?
+  - In Master (Rocky) what does '--no-config-download' do?
+  - Why does Master (Rocky) not use config-download-environment.yaml?
+- After the deployment runs, run only the items in the DOWN section and verify you have a working ansible inventory in tripleo-config-downloadto run ad hoc commands
+- Run the CONF section to configure your overcloud
+- While the overcloud is being configured by Ansible, read the playbooks:
+  - Read tripleo-config-download/deploy_steps_playbook.yaml first
+  - Are we still using step-wise deployments?
+  - How do the Ansible roles align to the default roles and what do you think would happen if we composed roles?
+  - Why do we only have group_vars for two roles?
