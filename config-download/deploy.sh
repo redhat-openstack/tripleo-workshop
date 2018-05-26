@@ -31,7 +31,7 @@ if [[ $HEAT -eq 1 ]]; then
 	-e /usr/share/openstack-tripleo-heat-templates/environments/docker.yaml \
 	-e /usr/share/openstack-tripleo-heat-templates/environments/low-memory-usage.yaml \
 	-e /usr/share/openstack-tripleo-heat-templates/environments/disable-telemetry.yaml \
-	-e ~/docker_registry.yaml
+	-e ~/docker_registry.yaml \
 	--no-config-download
         # remove --no-config-download to make DOWN and CONF unnecessary
     fi
@@ -57,7 +57,7 @@ if [[ $DOWN -eq 1 ]]; then
 fi
 # -------------------------------------------------------
 if [[ $CONF -eq 1 ]]; then
-    # 18 minutes to configure _minimal_ overcloud
+    # 25 minutes to configure _minimal_ overcloud
     time ansible-playbook \
 	 -v \
 	 --ssh-extra-args "-o StrictHostKeyChecking=no" --timeout 240 \
