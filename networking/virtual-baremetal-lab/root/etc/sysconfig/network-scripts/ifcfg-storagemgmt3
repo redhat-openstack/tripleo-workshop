@@ -1,0 +1,11 @@
+NAME=storagemgmt3
+DEVICE=storagemgmt3
+ONBOOT=yes
+DEVICETYPE=ovs
+TYPE=OVSIntPort
+OVS_BRIDGE=br-trunk
+IPV6INIT=no
+BOOTPROTO=static
+IPADDR=172.20.4.254
+PREFIX=26
+OVS_OPTIONS="tag=643"

@@ -1,0 +1,6 @@
+DEVICE=br-trunk
+ONBOOT=yes
+DEVICETYPE=ovs
+TYPE=OVSBridge
+HOTPLUG=no
+BOOTPROTO=none

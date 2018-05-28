@@ -1,0 +1,16 @@
+[Unit]
+Description=DHCP Relay Agent Daemon
+Documentation=man:dhcrelay(8)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+# 172.20.0.1 = undercloud introspection dhcp server
+# 172.20.0.10 = undercloud neutron dhcp server
+ExecStart=/usr/sbin/dhcrelay -d --no-pid 172.20.0.10 172.20.0.1 -i ctlplane1 -i ctlplane2 -i ctlplane3
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target
+

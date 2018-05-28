@@ -1,0 +1,6 @@
+DEVICE=br-ctlplane
+ONBOOT=yes
+DEVICETYPE=ovs
+TYPE=OVSBridge
+HOTPLUG=no
+BOOTPROTO=none

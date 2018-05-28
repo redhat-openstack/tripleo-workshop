@@ -1,0 +1,26 @@
+<network>
+  <name>ctlplane</name>
+  <forward mode='bridge'/>
+  <bridge name='br-ctlplane'/>
+  <virtualport type='openvswitch'/>
+  <portgroup name='ctlplane0'>
+    <vlan>
+      <tag id='600'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='ctlplane1'>
+    <vlan>
+      <tag id='601'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='ctlplane2'>
+    <vlan>
+      <tag id='602'/>
+    </vlan>
+  </portgroup>
+  <portgroup name='ctlplane3'>
+    <vlan>
+      <tag id='603'/>
+    </vlan>
+  </portgroup>
+</network>

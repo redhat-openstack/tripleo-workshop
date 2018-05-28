@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<direct>
+ [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane0 -j ACCEPT </rule> ]
+ [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane1 -j ACCEPT </rule> ]
+ [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane2 -j ACCEPT </rule> ]
+ [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane3 -j ACCEPT </rule> ]
+
+ [ <rule ipv="ipv4" table="filter" chain="INPUT" priority="0"> -p udp -m udp -m multiport --dports 6230:6238 -j ACCEPT </rule> ] 
+</direct>
+
