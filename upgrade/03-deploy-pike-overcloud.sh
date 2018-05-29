@@ -1,0 +1,28 @@
+#!/bin/bash
+
+source stackrc
+
+set -euxo pipefail
+cd $HOME
+
+THT="$HOME/tht-pike"
+
+if [ -z "${NTP_SERVER:-}" ]; then
+    echo "Set NTP_SERVER"
+    exit 1
+fi
+
+openstack overcloud deploy \
+    --templates $THT \
+    --libvirt-type qemu \
+    -e $THT/environments/docker.yaml \
+    -e $THT/environments/docker-ha.yaml \
+    -e $THT/environments/low-memory-usage.yaml \
+    -e $THT/environments/debug.yaml \
+    -e $HOME/basic-deployment.yaml \
+    -e $HOME/pike-container-params.yaml \
+    --control-scale 3 \
+    --compute-scale 1 \
+    --ntp-server "$NTP_SERVER" \
+
+    # --no-config-download  # only for master undercloud
