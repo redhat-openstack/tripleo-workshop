@@ -8,7 +8,7 @@
       <!-- InternalApi -->
       <tag id='610'/> <tag id='611'/> <tag id='612'/> <tag id='613'/>
       <!-- External -->
-      <tag id='620'/> <tag id='621'/> <tag id='622'/> <tag id='623'/>
+      <tag id='621'/>
       <!-- Storage -->
       <tag id='630'/> <tag id='631'/> <tag id='632'/> <tag id='633'/>
       <!-- StorageMgmt -->

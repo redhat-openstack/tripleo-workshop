@@ -1,0 +1,34 @@
+resource_registry:
+  OS::TripleO::NodeUserData: /home/stack/ceph/first-boot.yaml
+
+parameter_defaults:
+  CephAnsiblePlaybook: /usr/share/ceph-ansible/site-docker.yml.sample
+  CephPoolDefaultSize: 1
+  CephPoolDefaultPgNum: 32
+  CephConfigOverrides:
+    mon_max_pg_per_osd: 3072
+  CephAnsibleExtraConfig:
+    public_network:
+      '172.20.3.0/26,172.20.3.64/26,172.20.3.128/26,172.20.3.192/26'
+    cluster_network:
+      '172.20.4.0/26,172.20.4.64/26,172.20.4.128/26,172.20.4.192/26'
+    # HCI tuning
+    osd_recovery_op_priority: 3
+    osd_recovery_max_active: 3
+    osd_max_backfills: 1
+    # reserve 3G RAM + 1 CPU per OSD
+    ceph_osd_docker_memory_limit: 3g
+    ceph_osd_docker_cpu_limit: 1
+    osd_scenario: collocated
+    osd_objectstore: filestore
+  CephAnsiblePlaybookVerbosity: 3
+  CephAnsibleEnvironmentVariables:
+    ANSIBLE_SSH_RETRIES: '6'
+  CephAnsibleDisksConfig:
+    devices:
+      - /dev/vdb
+      - /dev/vdc
+      - /dev/vdd
+      - /dev/vde
+
+

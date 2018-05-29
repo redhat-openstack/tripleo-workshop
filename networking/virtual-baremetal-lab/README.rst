@@ -1,7 +1,148 @@
-tripleo-workshop - networking
-#############################
+tripleo-workshop - networking - Virtual Baremetal Lab
+#####################################################
 
-1. Install tripleo repos
+Pre-requirements
+----------------
+
+RHEL 7 or CentOS 7 baremtal machine with a lot of memory and some disks.
+
+Lab infrastructure
+------------------
+
+Hypervisor bridges
+==================
+
+- **br-ctlplane**
+
+  This bride hosts the ctlplane network VLAN's.
+
+- **br-trunk**
+
+  This bridge hosts external, storage, storagemgmt, internal and tenant
+  networks.
+
+Overcloud Control Plane Networks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++---------------+-----------------+---------------+-----------+--------------+
+| Network       | IP/Prefix       | Gateway       |VLAN ID    | OVS Bridge   |
++===============+=================+===============+===========+==============+
+| ctlplane0     | 172.20.0.0/26   | 172.20.0.62   | 600       | br-ctlplane  |
++---------------+-----------------+---------------+-----------+--------------+
+| ctlplane1     | 172.20.0.64/26  | 172.20.0.126  | 601       | br-ctlplane  |
++---------------+-----------------+---------------+-----------+--------------+
+| ctlplane2     | 172.20.0.128/26 | 172.20.0.190  | 602       | br-ctlplane  |
++---------------+-----------------+---------------+-----------+--------------+
+| ctlplane3     | 172.20.0.192/26 | 172.20.0.254  | 603       | br-ctlplane  |
++---------------+-----------------+---------------+-----------+--------------+
+
+Overcloud External Networks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++---------------+-----------------+---------------+-----------+--------------+
+| Network       | IP/Prefix       | Gateway       |VLAN ID    | OVS Bridge   |
++===============+=================+===============+===========+==============+
+| external1     | 172.20.2.64/26  | 172.20.2.126  | 621       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+
+
+Overcloud StorageMgmt Networks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++---------------+-----------------+---------------+-----------+--------------+
+| Network       | IP/Prefix       | Gateway       |VLAN ID    | OVS Bridge   |
++===============+=================+===============+===========+==============+
+| storagemgmt0  | 172.20.0.0/26   | 172.20.4.62   | 640       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| storagemgmt1  | 172.20.0.64/26  | 172.20.4.126  | 641       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| storagemgmt2  | 172.20.0.128/26 | 172.20.4.190  | 642       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| storagemgmt3  | 172.20.0.192/26 | 172.20.4.254  | 643       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+
+Overcloud Storage Networks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++---------------+-----------------+---------------+-----------+--------------+
+| Network       | IP/Prefix       | Gateway       |VLAN ID    | OVS Bridge   |
++===============+=================+===============+===========+==============+
+| storage0      | 172.20.3.0/26   | 172.20.3.62   | 630       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| storage1      | 172.20.3.64/26  | 172.20.3.126  | 631       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| storage2      | 172.20.3.128/26 | 172.20.3.190  | 632       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| storage3      | 172.20.3.192/26 | 172.20.3.254  | 633       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+
+Ovecloud Internal Api Networks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++---------------+-----------------+---------------+-----------+--------------+
+| Network       | IP/Prefix       | Gateway       |VLAN ID    | OVS Bridge   |
++===============+=================+===============+===========+==============+
+| intapi0       | 172.20.1.0/26   | 172.20.1.62   | 610       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| intapi1       | 172.20.1.64/26  | 172.20.1.126  | 611       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| intapi2       | 172.20.1.128/26 | 172.20.1.190  | 612       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| intapi3       | 172.20.1.192/26 | 172.20.1.254  | 613       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+
+Ovecloud Tenant Networks
+~~~~~~~~~~~~~~~~~~~~~~~~
+
++---------------+-----------------+---------------+-----------+--------------+
+| Network       | IP/Prefix       | Gateway       |VLAN ID    | OVS Bridge   |
++===============+=================+===============+===========+==============+
+| tenant0       | 172.20.5.0/26   | 172.20.5.62   | 650       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| tenant1       | 172.20.5.64/26  | 172.20.5.126  | 651       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| tenant2       | 172.20.5.128/26 | 172.20.5.190  | 652       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+| tenant3       | 172.20.5.192/26 | 172.20.5.254  | 653       | br-trunk     |
++---------------+-----------------+---------------+-----------+--------------+
+
+Libvirt networks
+================
+
++---------------+--------------+--------------+-------------------+
+| Name          | Bridge       | PortGroup(s) | Vlan(s)           |
++===============+==============+==============+===================+
+| **ctlplane**  | br-ctlplane  | ctlplane0    | 600 (untagged)    |
++---------------+--------------+--------------+-------------------+
+|               |              | ctlplane1    | 601 (untagged)    |
++------------------------------+--------------+-------------------+
+|               |              | ctlplane2    | 602 (untagged)    |
++------------------------------+--------------+-------------------+
+|               |              | ctlplane3    | 603 (untagged)    |
++---------------+--------------+--------------+-------------------+
+| **default**   | virbr0       | N/A          | N/A               |
++---------------+--------------+--------------+-------------------+
+| **trunk**     | br-trunk     | trunk        | 610-613, (tagged) |
++---------------+--------------+--------------+-------------------+
+|                                             | 620-623, (tagged) |
++---------------------------------------------+-------------------+
+|                                             | 630-633, (tagged) |
++---------------------------------------------+-------------------+
+|                                             | 640-643, (tagged) |
++---------------------------------------------+-------------------+
+|                                             | 650-653  (tagged) |
++---------------+--------------+--------------+-------------------+
+
+
+
+Set up the virtual baremetal lab
+--------------------------------
+
+1. Generate ssh keys
+
+   ::
+
+     ssh-keygen
+
+#. Install tripleo repos
 
    Get the url for the ``python2-tripleo-repos`` to rpm available in this repo:
    `https://trunk.rdoproject.org/centos7/current/ <https://trunk.rdoproject.org/centos7/current/>`_.
@@ -14,7 +155,7 @@ tripleo-workshop - networking
 
    ::
 
-     tripleo-repos -b queens current
+     tripleo-repos -b queens current ceph
 
 #. Install group  ``Virtualization Host``
 
@@ -22,17 +163,62 @@ tripleo-workshop - networking
 
      yum -y groupinstall 'Virtualization Host'
 
+   .. NOTE:: Training lab may already have this ...
+
 #. Install VirtualBMC, OpenvSwtich, some virt tools and dhcp relay agent
 
    ::
 
-     yum -y install python2-setuptools python-virtualbmc openvswitch virt-install libguestfs-tools libguestfs-xfs dhcp
+     yum -y install git python2-setuptools python-virtualbmc openvswitch virt-install libguestfs-tools libguestfs-xfs
+
+#. Enable nested virtualization
+
+   ::
+
+     cat << EOF > /etc/modprobe.d/kvm_intel.conf
+     options kvm-intel nested=1
+     options kvm-intel enable_shadow_vmcs=1
+     options kvm-intel enable_apicv=1
+     options kvm-intel ept=1
+     EOF
+
+     modprobe -r kvm_intel
+     modprobe kvm_intel
+     cat /sys/module/kvm_intel/parameters/nested
+
+
+#. Compile and install dhcrelay from ics-dhcp
+
+   .. NOTE:: The dhcp package in RHEL/CentOS is ICS-DHCP 4.2.x. The dhcrelay
+             that comes with the package is buggy. We need ICS-DHCP 4.3.x.
+
+   ::
+
+     # Install build dependencies
+     yum -y install gcc make
+
+     # Create a user to compile software
+     useradd devuser
+     su - devuser
+     # Download the source, decrunch and unpack
+     curl -o dhcp-4-3-6-p1.tar.gz https://www.isc.org/downloads/file/dhcp-4-3-6-p1/
+     tar xvzf dhcp-4-3-6-p1.tar.gz
+     cd dhcp-4.3.6-P1/
+     # Configure, Compile, Install
+     ./configure --prefix=/usr/local
+     make
+     su root
+     make install
+
+     exit
+     exit
+
 
 #. Clone labs git repo.
 
    ::
 
-     git clone git@github.com:redhat-openstack/tripleo-workshop.git
+     git clone https://github.com/redhat-openstack/tripleo-workshop.git
 
 #. Deploy virtual baremetal network infra config.
 
@@ -43,12 +229,17 @@ tripleo-workshop - networking
 
      scp -r ./tripleo-workshop/networking/virtual-baremetal-lab/root/* /
      systemctl restart network
+
+   .. NOTE:: Patience, the network restart does take long ...
+
+   ::
+
      systemctl restart firewalld
 
      # Make the script executable
      chmod +x /usr/local/bin/generate_instackenv.py
 
-   .. NOTE:: Patience, the network restart does take long ...
+
 
 #. Enable ip routing.
 
@@ -153,6 +344,13 @@ tripleo-workshop - networking
 
      /usr/local/bin/generate_instackenv.py > instackenv.json
 
+   .. NOTE:: If the ip-address of the libvirt bridge is not ``192.168.122.1``
+             make sure to update instackenv.json prior to registering the
+             nodes.
+             ::
+
+               sed -i s/192.168.122.1/<libvirt-bridge-ip>/instackenv.json
+
 #. Create undercloud vm.
 
    ::
@@ -160,6 +358,7 @@ tripleo-workshop - networking
      cd /var/lib/libvirt/images/
      # Download and decompress CentOS Cloud image
      curl -O https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2.xz
+     # curl -O http://10.12.50.1/pub/tripleo-masterclass/CentOS-7-x86_64-GenericCloud.qcow2.xz
      unxz CentOS-7-x86_64-GenericCloud.qcow2.xz
 
      # Create a new image for undercloud
@@ -172,8 +371,8 @@ tripleo-workshop - networking
      virt-customize -a undercloud.qcow2 --root-password password:Redhat01
 
      # Create config drive
-     ssh-keygen
 
+     mkdir -p /tmp/cloud-init-data/
      cat << EOF > /tmp/cloud-init-data/meta-data
      instance-id: undercloud-instance-id
      local-hostname: undercloud.example.com
@@ -194,8 +393,7 @@ tripleo-workshop - networking
        -J /tmp/cloud-init-data/meta-data /tmp/cloud-init-data/user-data
 
      # Launch the undercloud vm
-     #virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
-     virt-install --ram 2048 --vcpus 4 --os-variant centos7.0 \
+     virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
      --disk path=/var/lib/libvirt/images/undercloud.qcow2,device=disk,bus=virtio,format=qcow2 \
      --disk path=/var/lib/libvirt/images/undercloud-config.iso,device=cdrom \
      --import --noautoconsole --vnc \
@@ -213,112 +411,6 @@ tripleo-workshop - networking
 
      ssh root@<undercloud-ip>
 
-#. Install undercloud
 
-   Set the hostname::
-
-    hostnamectl set-hostname undercloud.example.com
-    hostnamectl set-hostname --transient undercloud.example.com
-    cat << EOF > /etc/hosts
-    127.0.0.1   undercloud.exeample.com undercloud localhost localhost.localdomain localhost4 localhost4.localdomain4
-    ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-    EOF
-
-
-   Reference the
-   `documentation <https://docs.openstack.org/tripleo-docs/latest/install/installation/installation.html>`_
-   and install stable/queens undercloud using the following undercloud
-   configuration (``undercloud.conf``)::
-
-     [DEFAULT]
-
-     undercloud_hostname = undercloud.example.com
-     local_ip = 172.20.0.1/26
-     undercloud_public_host = 172.20.0.2
-     undercloud_admin_host = 172.20.0.3
-     # or the libvirt hosts dnsmasq ...
-     undercloud_nameservers = 8.8.8.8
-     undercloud_ntp_servers = 0.cz.pool.ntp.org,1.cz.pool.ntp.org
-
-     subnets = ctlplane0,ctlplane1,ctlplane2,ctlplane3
-     local_subnet = ctlplane0
-
-     local_interface = eth1
-     local_mtu = 1500
-     inspection_interface = br-ctlplane
-     scheduler_max_attempts = 3
-     enable_routed_networks = true
-
-     [ctlplane0]
-     cidr = 172.20.0.0/26
-     gateway = 172.20.0.62
-     dhcp_start = 172.20.0.10
-     dhcp_end = 172.20.0.29
-     inspection_iprange = 172.20.0.30,172.20.0.49
-     masquerade = true
-
-     [ctlplane1]
-     cidr = 172.20.0.64/26
-     gateway = 172.20.0.126
-     dhcp_start = 172.20.0.80
-     dhcp_end = 172.20.0.99
-     inspection_iprange = 172.20.0.100,172.20.0.119
-     masquerade = true
-
-     [ctlplane2]
-     cidr = 172.20.0.128/26
-     gateway = 172.20.0.190
-     dhcp_start = 172.20.0.140
-     dhcp_end = 172.20.0.159
-     inspection_iprange = 172.20.0.170,172.20.0.189
-     masquerade = true
-
-     [ctlplane3]
-     cidr = 172.20.0.192/26
-     gateway = 172.20.0.254
-     dhcp_start = 172.20.0.200
-     dhcp_end = 172.20.0.219
-     inspection_iprange = 172.20.0.230,172.20.0.249
-     masquerade = true
-
-#. Build overcloud images and upload them
-
-   Reference the
-   `documentation and build overcloud images
-   <https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/basic_deployment_cli.html#get-images>`_.
-
-   .. Note:: If using ceph make sure to use the luminous repo.
-
-   ::
-
-     export DIB_YUM_REPO_CONF="/etc/yum.repos.d/delorean*"
-     export DIB_YUM_REPO_CONF="$DIB_YUM_REPO_CONF /etc/yum.repos.d/tripleo-centos-ceph-luminous.repo"
-
-   Reference the
-   `documentation and upload overcloud images in the undercloud
-   <https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/basic_deployment_cli.html#upload-images>`_.
-
-
-#. Copy instack-env.json to the undercloud
-
-   ::
-
-     scp instackenv.json stack@<undercloud-ip>:
-
-#. Register nodes
-
-   Reference the
-   `documentation to register nodes
-   <https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/basic_deployment_cli.html#register-nodes>`_
-   using ``instackenv.json`` that was generated and copied
-   to the undercloud in previous steps.
-
-   .. NOTE:: If the ip-address of the libvirt bridge is not ``192.168.122.1``
-             make sure to update instackenv.json prior to registering the
-             nodes.
-
-#. Introspect Nodes
-
-   Reference the
-   `documentation and introspect all the nodes
-   <https://docs.openstack.org/tripleo-docs/latest/install/basic_deployment/basic_deployment_cli.html#introspect-nodes>`_.
+#. Move on to set up
+   `undercloud <https://github.com/redhat-openstack/tripleo-workshop/tree/master/networking/undercloud>`_.

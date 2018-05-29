@@ -5,10 +5,10 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=notify
+Type=simple
 # 172.20.0.1 = undercloud introspection dhcp server
 # 172.20.0.10 = undercloud neutron dhcp server
-ExecStart=/usr/sbin/dhcrelay -d --no-pid 172.20.0.10 172.20.0.1 -i ctlplane1 -i ctlplane2 -i ctlplane3
+ExecStart=/usr/local/sbin/dhcrelay -d --no-pid 172.20.0.10 172.20.0.1 -iu ctlplane0 -id ctlplane1 -id ctlplane2 -id ctlplane3
 StandardError=null
 
 [Install]
