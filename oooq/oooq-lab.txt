@@ -30,13 +30,15 @@ sudo rm -f /etc/sudoers.d/oooq
 4. Deploy oooq pointing it to 127.0.0.2
 ./quickstart.sh -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
 
+The above takes ~35 minutes on the lab hardware.
+
 You should get the following VMs:
 3 controllers
 1 compute
 3 ceph storage nodes
 
 5. Fetch all containers
-Log on the undercloud and run overcloud-prep-containers.sh
+Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and run overcloud-prep-containers.sh
 
 6. Deploy the overcloud:
 Now you can try to run ./overcloud-deploy.sh
