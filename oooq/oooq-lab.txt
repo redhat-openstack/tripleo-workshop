@@ -44,6 +44,9 @@ Now you can try to run ./overcloud-deploy.sh
 It will fail because the default tags used by quickstart.sh do not create
 ~/network-environment.yaml
 
+How on earth am I supposed to know which tags quickstart.sh will run?
+./quickstart.sh --dry-run ...
+
 7. Let's execute only that step:
 ./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-prep-config' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
 
