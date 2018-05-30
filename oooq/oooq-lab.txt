@@ -1,0 +1,64 @@
+1. Log on your machine as root, create the 'oooq' user and set a password for it, install tmux, vim, editor
+
+useradd oooq
+echo "Redhat123" | passwd --stdin oooq
+
+# Needed for quickstart.sh --install-deps
+echo "oooq ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/oooq
+sudo chmod 0440 /etc/sudoers.d/oooq
+
+yum install -y tmux vim libguestfs-tools
+
+# Due to https://bugzilla.redhat.com/show_bug.cgi?id=1581364 libvirt issue
+mkdir rpms; pushd rpms
+wget -r -nd -l1 -v --no-parent  http://file.rdu.redhat.com/~mbaldess/libvirt-rpms/ 
+rpm -Fvh *rpm
+popd
+systemctl restart libvirtd
+
+2. Log in as oooq (copy your ssh pub key to that user), start tmux
+ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+ssh-copy-id root@127.0.0.2
+
+3. Download quickstart.sh:
+curl -O https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+chmod +x quickstart.sh
+./quickstart.sh --install-deps
+
+sudo rm -f /etc/sudoers.d/oooq
+
+4. Deploy oooq pointing it to 127.0.0.2
+./quickstart.sh -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
+
+The above takes ~35 minutes on the lab hardware.
+
+You should get the following VMs:
+3 controllers
+1 compute
+3 ceph storage nodes
+
+5. Fetch all containers
+Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and run overcloud-prep-containers.sh
+
+6. Deploy the overcloud:
+Now you can try to run ./overcloud-deploy.sh
+
+It will fail because the default tags used by quickstart.sh do not create
+~/network-environment.yaml
+
+How on earth am I supposed to know which tags quickstart.sh will run?
+./quickstart.sh --dry-run ...
+
+7. Let's execute only that step:
+./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-prep-config' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
+
+By adding --retain-inventory and --teardown none we force it to reuse the work done until now.
+Now we should have a network-environment.yaml created on the undercloud
+
+8. Retry the deployment via ./overcloud-deploy.sh
+Barring errors we should get a CREATE_COMPLETE
+
+9. Let's validate that VMs can actually start:
+./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-validate' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
+
+This will spin up a VM and confirm (or not) if the overcloud is working okay.
