@@ -1,4 +1,5 @@
 undercloud_generate_service_certificate: false
+undercloud_clean_nodes: true
 ssl_overcloud: false
 undercloud_docker_registry_mirror: http://10.12.50.1:5000
 step_introspect: false
@@ -60,4 +61,4 @@ network_isolation_type: 'single-nic-vlans'
 topology: >-
   --compute-scale 1
   --control-scale 3
-  --ceph-storage-scale 3
+  --ceph-storage-scale 0
