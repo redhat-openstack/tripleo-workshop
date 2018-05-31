@@ -28,6 +28,9 @@ chmod +x quickstart.sh
 sudo rm -f /etc/sudoers.d/oooq
 
 4. Deploy oooq pointing it to 127.0.0.2
+Note: If your machine is not in Rhys' lab then, depending where the machine is, the
+"undercloud_docker_registry_mirror" and "*_image_url" settings might need tweaking.
+
 ./quickstart.sh -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
 
 The above takes ~35 minutes on the lab hardware.
@@ -41,10 +44,11 @@ You should get the following VMs:
 Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and run overcloud-prep-containers.sh
 
 6. Deploy the overcloud:
-Now you can try to run ./overcloud-deploy.sh
+Modify overcloud-deploy.sh to change "--ceph-storage-scale 3" to
+"--ceph-storage-scale 0" as we will deploy Ceph later. Then run ./overcloud-deploy.sh.
 
 It will fail because the default tags used by quickstart.sh do not create
-~/network-environment.yaml
+~/network-environment.yaml (see https://bugs.launchpad.net/tripleo/+bug/1737602 for more info)
 
 How on earth am I supposed to know which tags quickstart.sh will run?
 ./quickstart.sh --dry-run ...
@@ -57,6 +61,8 @@ Now we should have a network-environment.yaml created on the undercloud
 
 8. Retry the deployment via ./overcloud-deploy.sh
 Barring errors we should get a CREATE_COMPLETE
+
+A full successful deployment lasts around ~45mins
 
 9. Let's validate that VMs can actually start:
 ./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-validate' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2

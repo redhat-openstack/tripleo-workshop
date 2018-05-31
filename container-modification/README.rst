@@ -8,6 +8,7 @@ Modifying a Docker container in TripleO
    ::
 
         sudo docker build --rm -t 192.168.24.1:8787/tripleoqueens/centos-binary-swift-proxy-server:fix .
+        sudo docker push 192.168.24.1:8787/tripleoqueens/centos-binary-swift-proxy-server:fix
 
 #. Now use the modified container by deploying with the additional environment
    file:
@@ -18,7 +19,7 @@ Modifying a Docker container in TripleO
 
 #. If you used the patch from this directory, you should get a slightly
    modified response from the Swift proxy server when sending a GET request to
-   /info:
+   http://<swift proxy>/info. Look out for tripleo:
 
    ::
 

@@ -70,9 +70,3 @@ overcloud_nodes:
     virtualbmc_port: 6244
 
 node_count: 7
-network_isolation: true
-network_isolation_type: 'single-nic-vlans'
-topology: >-
-  --compute-scale 1
-  --control-scale 3
-  --ceph-storage-scale 3
