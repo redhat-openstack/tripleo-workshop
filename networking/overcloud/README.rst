@@ -49,11 +49,18 @@ tripleo-workshop - networking - Overcloud Installation
        --output-env-file /home/stack/environments/docker_registry.yaml \
        --output-images-file /home/stack/templates/overcloud_containers.yaml
 
-#. Workaround for `bug: 1772124 <https://bugs.launchpad.net/tripleo/+bug/1772124>`_
+#. Workaround for `bug: #1772124 <https://bugs.launchpad.net/tripleo/+bug/1772124>`_
 
    ::
 
      sudo sed -i s/internal_api_virtual_ip/#internal_api_virtual_ip/ \
+         /usr/share/openstack-tripleo-heat-templates/puppet/all-nodes-config.j2.yaml
+
+#. Workaround for `bug: #1774401 <https://bugs.launchpad.net/tripleo/+bug/1774401>`_
+
+   ::
+
+     sudo sed -i s/ExternalNetName/External1NetName/ \
          /usr/share/openstack-tripleo-heat-templates/puppet/all-nodes-config.j2.yaml
 
 #. Deploy the overcloud
