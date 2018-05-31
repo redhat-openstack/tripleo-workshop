@@ -41,6 +41,9 @@ Install undercloud
      scheduler_max_attempts = 3
      enable_routed_networks = true
 
+     # Comment this if not using a docker registry mirror
+     docker_registry_mirror = http://10.12.50.1:5000
+
      [ctlplane0]
      cidr = 172.20.0.0/26
      gateway = 172.20.0.62
@@ -129,6 +132,14 @@ Install undercloud
    ::
 
      openstack overcloud node import instackenv.json
+
+#. Set root device hint for Ceph nodes
+
+   ::
+
+     openstack baremetal node set overcloud-ceph1-0 --property root_device='{"name": "/dev/vda"}'
+     openstack baremetal node set overcloud-ceph2-0 --property root_device='{"name": "/dev/vda"}'
+     openstack baremetal node set overcloud-ceph3-0 --property root_device='{"name": "/dev/vda"}'
 
 #. Introspect Nodes
 
