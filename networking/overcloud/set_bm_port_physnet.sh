@@ -2,10 +2,6 @@
 
 source /home/stack/stackrc
 
-for bmnode in $(openstack baremetal node list -f value -c ID); do
-  openstack baremetal node manage $bmnode
-done
-
 openstack baremetal port set --physical-network ctlplane1 $(openstack baremetal port list --node overcloud-controller-0 -f value -c UUID)
 openstack baremetal port set --physical-network ctlplane1 $(openstack baremetal port list --node overcloud-controller-1 -f value -c UUID)
 openstack baremetal port set --physical-network ctlplane1 $(openstack baremetal port list --node overcloud-controller-2 -f value -c UUID)
@@ -18,6 +14,6 @@ openstack baremetal port set --physical-network ctlplane1 $(openstack baremetal 
 openstack baremetal port set --physical-network ctlplane2 $(openstack baremetal port list --node overcloud-ceph2-0 -f value -c UUID)
 openstack baremetal port set --physical-network ctlplane3 $(openstack baremetal port list --node overcloud-ceph3-0 -f value -c UUID)
 
-for bmnode in $(openstack baremetal node list -f value -c ID); do
+for bmnode in $(openstack baremetal node list -f value -c UUID); do
   openstack baremetal node provide $bmnode
 done
