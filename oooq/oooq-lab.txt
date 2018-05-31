@@ -44,8 +44,7 @@ You should get the following VMs:
 Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and run overcloud-prep-containers.sh
 
 6. Deploy the overcloud:
-Modify overcloud-deploy.sh to change "--ceph-storage-scale 3" to
-"--ceph-storage-scale 0" as we will deploy Ceph later. Then run ./overcloud-deploy.sh.
+Run ./overcloud-deploy.sh.
 
 It will fail because the default tags used by quickstart.sh do not create
 ~/network-environment.yaml (see https://bugs.launchpad.net/tripleo/+bug/1737602 for more info)
