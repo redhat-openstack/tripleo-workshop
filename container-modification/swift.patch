@@ -7,6 +7,6 @@ index 197e189..e48d5dd 100644
          info['admin'] = dict(_swift_admin_info)
          info['admin']['disallowed_sections'] = list(disallowed_sections)
 +
-+    info['greeting'] = "Hello World"
++    info['tripleo'] = {"msg": "Hello World"}
 +
      return info
