@@ -28,6 +28,9 @@ chmod +x quickstart.sh
 sudo rm -f /etc/sudoers.d/oooq
 
 4. Deploy oooq pointing it to 127.0.0.2
+Note: If your machine is not in Rhys' lab then, depending where the machine is, the
+"undercloud_docker_registry_mirror" and "*_image_url" settings might need tweaking.
+
 ./quickstart.sh -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
 
 The above takes ~35 minutes on the lab hardware.
