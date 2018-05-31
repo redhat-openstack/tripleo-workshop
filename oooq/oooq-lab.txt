@@ -44,7 +44,7 @@ Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and r
 Now you can try to run ./overcloud-deploy.sh
 
 It will fail because the default tags used by quickstart.sh do not create
-~/network-environment.yaml
+~/network-environment.yaml (see https://bugs.launchpad.net/tripleo/+bug/1737602 for more info)
 
 How on earth am I supposed to know which tags quickstart.sh will run?
 ./quickstart.sh --dry-run ...

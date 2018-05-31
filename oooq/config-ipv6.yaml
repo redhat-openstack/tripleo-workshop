@@ -4,6 +4,7 @@ undercloud_docker_registry_mirror: http://10.12.50.1:5000
 step_introspect: false
 containerized_overcloud: true
 enable_pacemaker: true
+overcloud_ipv6: true
 
 undercloud_enable_ui: false
 
@@ -33,21 +34,19 @@ undercloud_network_cidr: 192.168.24.0/24
 
 overcloud_dns_servers: ["10.12.50.1" ] 
 network_environment_args:
-  ExternalNetCidr: "{{ undercloud_external_network_cidr }}"
-  ExternalAllocationPools: >
-    [{'start': '{{ undercloud_external_network_cidr|nthhost(10) }}',
-    'end': '{{ undercloud_external_network_cidr|nthhost(50) }}'}]
+  ExternalInterfaceDefaultRoute: "2001:db8:fd00:1000::1"
+  ExternalNetCidr: "2001:db8:fd00:1000::/64"
+  ExternalAllocationPools: [{'end': '2001:db8:fd00:1000:ffff:ffff:ffff:fffe', 'start': '2001:db8:fd00:1000::10'}]
   NeutronExternalNetworkBridge: ""
   ControlPlaneSubnetCidr: "{{ undercloud_network_cidr|ipaddr('prefix') }}"
   ControlPlaneDefaultRoute: "{{ undercloud_network_cidr|nthhost(1) }}"
   EC2MetadataIp: "{{ undercloud_network_cidr|nthhost(1) }}"
-  ExternalInterfaceDefaultRoute: "{{ undercloud_external_network_cidr|nthhost(1) }}"
-  InternalApiNetCidr: 172.20.0.0/24
-  InternalApiAllocationPools: [{"start": "172.20.0.10", "end": "172.20.0.250"}]
-  StorageNetCidr: 172.18.0.0/24
-  StorageAllocationPools: [{"start": "172.18.0.10", "end": "172.18.0.250"}]
-  StorageMgmtNetCidr: 172.19.0.0/24
-  StorageMgmtAllocationPools: [{"start": "172.19.0.10", "end": "172.19.0.250"}]
+  InternalApiNetCidr: "fd00:fd00:fd00:2000::/64"
+  InternalApiAllocationPools: [{"start": "fd00:fd00:fd00:2000::10", "end": "fd00:fd00:fd00:2000:ffff:ffff:ffff:fffe"}]
+  StorageNetCidr: "fd00:fd00:fd00:3000::/64"
+  StorageAllocationPools: [{"start": "fd00:fd00:fd00:3000::10", "end": "fd00:fd00:fd00:3000:ffff:ffff:ffff:fffe"}]
+  StorageMgmtNetCidr: "fd00:fd00:fd00:4000::/64"
+  StorageMgmtAllocationPools: [{"start": "fd00:fd00:fd00:4000::10", "end": "fd00:fd00:fd00:4000:ffff:ffff:ffff:fffe"}]
   TenantNetCidr: 172.16.0.0/24
   TenantAllocationPools: [{"start": "172.16.0.10", "end": "172.16.0.250"}]
   DnsServers: "{{ overcloud_dns_servers }}"
@@ -55,6 +54,11 @@ network_environment_args:
 
 network_isolation: true
 network_isolation_type: 'single-nic-vlans'
+network_isolation_args: >-
+  -e {{ overcloud_templates_path }}/environments/network-isolation-v6.yaml
+  -e {{ overcloud_templates_path }}/environments/net-single-nic-with-vlans-v6.yaml
+  -e {{ working_dir }}/network-environment.yaml
+
 topology: >-
   --compute-scale 1
   --control-scale 3
