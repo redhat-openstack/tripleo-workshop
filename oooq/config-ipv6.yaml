@@ -14,6 +14,8 @@ telemetry_args: >-
 extra_args: >-
   --ntp-server clock.redhat.com
 test_ping: true
+modify_image_vc_verbose: true
+modify_image_vc_root_password: redhat
 
 # Use local mirror for images
 overcloud_image_url: http://10.12.50.1/pub/tripleo-masterclass/queens-tripleo/overcloud-full.tar
