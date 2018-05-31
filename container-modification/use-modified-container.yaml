@@ -1,0 +1,2 @@
+parameter_defaults:
+  DockerSwiftProxyImage: 192.168.24.1:8787/tripleoqueens/centos-binary-swift-proxy-server:fix
