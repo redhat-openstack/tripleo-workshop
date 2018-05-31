@@ -62,6 +62,8 @@ Now we should have a network-environment.yaml created on the undercloud
 8. Retry the deployment via ./overcloud-deploy.sh
 Barring errors we should get a CREATE_COMPLETE
 
+A full successful deployment lasts around ~45mins
+
 9. Let's validate that VMs can actually start:
 ./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-validate' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
 
