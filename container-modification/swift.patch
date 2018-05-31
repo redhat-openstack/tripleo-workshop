@@ -1,0 +1,12 @@
+diff --git a/swift/common/utils.py b/swift/common/utils.py
+index 197e189..e48d5dd 100644
+--- a/swift/common/utils.py
++++ b/swift/common/utils.py
+@@ -312,6 +312,9 @@ def get_swift_info(admin=False, disallowed_sections=None):
+     if admin:
+         info['admin'] = dict(_swift_admin_info)
+         info['admin']['disallowed_sections'] = list(disallowed_sections)
++
++    info['greeting'] = "Hello World"
++
+     return info
