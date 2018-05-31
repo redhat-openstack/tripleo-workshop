@@ -8,7 +8,7 @@ parameter_defaults:
    # -------------------------------------------------------------------------
     # Controller Node role - subnet mapping
     # -------------------------------------------------------------------------
-    Control1ControlPlaneSubnet: ctlplane1
+    Controller1ControlPlaneSubnet: ctlplane1
 
     # -------------------------------------------------------------------------
     # Compute Node roles - subnet mapping
@@ -116,28 +116,28 @@ parameter_defaults:
     Storage0AllocationPools:
     -   start: 172.20.3.10
         end: 172.20.3.29
-    Storage0NetCidr: 172.29.3.0/26
+    Storage0NetCidr: 172.20.3.0/26
     Storage0NetworkVlanID: 639
 
-    Storage1InterfaceDefaultRoute: 172.23.0.126
+    Storage1InterfaceDefaultRoute: 172.20.3.126
     Storage1AllocationPools:
     -   start: 172.20.3.80
         end: 172.20.3.99
-    Storage1NetCidr: 172.29.3.64/26
+    Storage1NetCidr: 172.20.3.64/26
     Storage1NetworkVlanID: 631
 
-    Storage2InterfaceDefaultRoute: 172.23.0.190
+    Storage2InterfaceDefaultRoute: 172.20.3.190
     Storage2AllocationPools:
     -   start: 172.20.3.140
         end: 172.20.3.159
-    Storage2NetCidr: 172.29.3.128/26
+    Storage2NetCidr: 172.20.3.128/26
     Storage2NetworkVlanID: 632
 
-    Storage3InterfaceDefaultRoute: 172.23.0.254
+    Storage3InterfaceDefaultRoute: 172.20.3.254
     Storage3AllocationPools:
     -   start: 172.20.3.219
         end: 172.20.3.229
-    Storage3NetCidr: 172.29.3.192/26
+    Storage3NetCidr: 172.20.3.192/26
     Storage3NetworkVlanID: 633
 
     # -------------------------------------------------------------------------
@@ -147,7 +147,7 @@ parameter_defaults:
     StorageMgmt0AllocationPools:
     -   start: 172.20.4.10
         end: 172.20.4.29
-    StorageMgmt0NetCidr: 172.20.3.0/26
+    StorageMgmt0NetCidr: 172.20.4.0/26
     StorageMgmt0NetworkVlanID: 640
 
     StorageMgmt1InterfaceDefaultRoute: 172.20.4.126
@@ -209,13 +209,93 @@ parameter_defaults:
     NeutronNetworkVLANRanges: tenant:1000:2000
     NeutronTunnelTypes: vxlan
 
+    ServiceNetMap:
+        ApacheNetwork: internal_api1
+        NeutronTenantNetwork: tenant1
+        CeilometerApiNetwork: internal_api1
+        AodhApiNetwork: internal_api1
+        PankoApiNetwork: internal_api1
+        BarbicanApiNetwork: internal_api1
+        GnocchiApiNetwork: internal_api1
+        MongodbNetwork: internal_api1
+        CinderApiNetwork: internal_api1
+        CinderIscsiNetwork: storage1
+        CongressApiNetwork: internal_api1
+        GlanceApiNetwork: internal_api1
+        IronicApiNetwork: ctlplane1
+        IronicNetwork: ctlplane1
+        IronicInspectorNetwork: ctlplane1
+        KeystoneAdminApiNetwork: ctlplane1 # allows undercloud to config endpoints
+        KeystonePublicApiNetwork: internal_api1
+        ManilaApiNetwork: internal_api1
+        NeutronApiNetwork: internal_api1
+        OctaviaApiNetwork: internal_api1
+        HeatApiNetwork: internal_api1
+        HeatApiCfnNetwork: internal_api1
+        HeatApiCloudwatchNetwork: internal_api1
+        NovaApiNetwork: internal_api1
+        NovaPlacementNetwork: internal_api1
+        NovaMetadataNetwork: internal_api1
+        NovaVncProxyNetwork: internal_api1
+        NovaLibvirtNetwork: internal_api1
+        NovajoinNetwork: internal_api1
+        Ec2ApiNetwork: internal_api1
+        Ec2ApiMetadataNetwork: internal_api1
+        TackerApiNetwork: internal_api1
+        SwiftStorageNetwork: storage_mgmt1
+        SwiftProxyNetwork: storage1
+        SaharaApiNetwork: internal_api1
+        HorizonNetwork: internal_api1
+        MemcachedNetwork: internal_api1
+        OsloMessagingRpcNetwork: internal_api1
+        OsloMessagingNotifyNetwork: internal_api1
+        RabbitmqNetwork: internal_api1
+        QdrNetwork: internal_api1
+        RedisNetwork: internal_api1
+        GaneshaNetwork: storage_nfs
+        MysqlNetwork: internal_api1
+        SnmpdNetwork: internal_api1
+        CephClusterNetwork: storage_mgmt
+        CephMonNetwork: storage1
+        CephRgwNetwork: storage1
+        PublicNetwork: external1
+        OpendaylightApiNetwork: internal_api1
+        OvnDbsNetwork: internal_api1
+        MistralApiNetwork: internal_api1
+        ZaqarApiNetwork: internal_api1
+        DockerRegistryNetwork: ctlplane1
+        PacemakerRemoteNetwork: internal_api1
+        TripleoUINetwork: internal_api1
+        DesignateApiNetwork: internal_api1
+        # We special-case the default ResolveNetwork for the CephStorage role
+        # for backwards compatibility, all other roles default to internal_api
+        CephStorage1HostnameResolveNetwork: storage1
+        CephStorage2HostnameResolveNetwork: storage2
+        CephStorage3HostnameResolveNetwork: storage3
+        EtcdNetwork: internal_api
+        #{% for role in roles if role.name != 'CephStorage' %}
+        #   {{role.name}}HostnameResolveNetwork: internal_api
+        #{% endfor %}
+        Controller1HostnameResolveNetwork: internal_api1
+        Compute1HostnameResolveNetwork: internal_api1
+        Compute2HostnameResolveNetwork: internal_api2
+        Compute3HostnameResolveNetwork: internal_api3
+
+
+
 resource_registry:
-    OS::TripleO::Control1::Net::SoftwareConfig: nic-config/control1.yaml
-    OS::TripleO::CephStorage0::Net::SoftwareConfig: nic-config/ceph0.yaml
-    OS::TripleO::CephStorage1::Net::SoftwareConfig: nic-config/ceph1.yaml
-    OS::TripleO::CephStorage2::Net::SoftwareConfig: nic-config/ceph2.yaml
-    OS::TripleO::CephStorage3::Net::SoftwareConfig: nic-config/ceph3.yaml
-    OS::TripleO::Compute0::Net::SoftwareConfig: nic-config/compute0.yaml
-    OS::TripleO::Compute1::Net::SoftwareConfig: nic-config/compute1.yaml
-    OS::TripleO::Compute2::Net::SoftwareConfig: nic-config/compute2.yaml
-    OS::TripleO::Compute3::Net::SoftwareConfig: nic-config/compute3.yaml
+    #--------------------------------------------------------------------------
+    # Controller Nodes
+    OS::TripleO::Controller1::Net::SoftwareConfig: /home/stack/templates/nic-config/control1.yaml
+    #--------------------------------------------------------------------------
+    # Ceph Storage Nodes
+    OS::TripleO::CephStorage0::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph0.yaml
+    OS::TripleO::CephStorage1::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph1.yaml
+    OS::TripleO::CephStorage2::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph2.yaml
+    OS::TripleO::CephStorage3::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph3.yaml
+    #--------------------------------------------------------------------------
+    # Compute Nodes
+    OS::TripleO::Compute0::Net::SoftwareConfig: /home/stack/templates/nic-config/compute0.yaml
+    OS::TripleO::Compute1::Net::SoftwareConfig: /home/stack/templates/nic-config/compute1.yaml
+    OS::TripleO::Compute2::Net::SoftwareConfig: /home/stack/templates/nic-config/compute2.yaml
+    OS::TripleO::Compute3::Net::SoftwareConfig: /home/stack/templates/nic-config/compute3.yaml

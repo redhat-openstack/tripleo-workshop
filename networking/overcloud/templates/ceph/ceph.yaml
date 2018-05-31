@@ -1,5 +1,5 @@
 resource_registry:
-  OS::TripleO::NodeUserData: /home/stack/ceph/first-boot.yaml
+  OS::TripleO::NodeUserData: /home/stack/templates/ceph/first-boot.yaml
 
 parameter_defaults:
   CephAnsiblePlaybook: /usr/share/ceph-ansible/site-docker.yml.sample

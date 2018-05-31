@@ -9,4 +9,4 @@ openstack overcloud deploy \
   -e /usr/share/openstack-tripleo-heat-templates/environments/low-memory-usage.yaml \
   -e /home/stack/environments/network-environment.yaml \
   -e /home/stack/templates/ceph/ceph.yaml \
-  -e /home/stack/templates/docker-images.yaml
+  -e /home/stack/environments/docker_registry.yaml

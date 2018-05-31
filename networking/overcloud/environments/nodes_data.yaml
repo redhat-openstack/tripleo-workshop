@@ -1,16 +1,38 @@
 parameter_defaults:
-    Control1Count: 3
-    OvercloudControl1Flavor: control-leaf1
 
-    Compute0Count: 1
-    OvercloudCompute0Flavor: compute-leaf0
-    Compute0ExtraConfig:
-     neutron::agents::ml2::ovs::local_ip: "%{hiera('tenant0')}"
+    #--------------------------------------------------------------------------
+    # Controller Nodes
+    #--------------------------------------------------------------------------
+    Controller1Count: 3
+    OvercloudController1Flavor: control1
+    Controller1xtraConfig:
+     neutron::agents::ml2::ovs::local_ip: "%{hiera('tenant1')}"
 
-    CephStorage0Count: 2
-    OvercloudCephStorage0Flavor: ceph-storage-leaf0
+    #--------------------------------------------------------------------------
+    # Compute Nodes
+    #--------------------------------------------------------------------------
+    Compute1Count: 1
+    OvercloudCompute1Flavor: compute1
+    Compute1ExtraConfig:
+     neutron::agents::ml2::ovs::local_ip: "%{hiera('tenant1')}"
+    Compute2Count: 1
+    OvercloudCompute2Flavor: compute2
+    Compute2ExtraConfig:
+     neutron::agents::ml2::ovs::local_ip: "%{hiera('tenant2')}"
+    Compute3Count: 1
+    OvercloudCompute3Flavor: compute3
+    Compute3ExtraConfig:
+     neutron::agents::ml2::ovs::local_ip: "%{hiera('tenant3')}"
 
+    #--------------------------------------------------------------------------
+    # Ceph Storage Nodes
+    #--------------------------------------------------------------------------
     CephStorage1Count: 1
-    OvercloudCephStorage1Flavor: ceph-storage-leaf1
+    OvercloudCephStorage1Flavor: ceph1
+    CephStorage2Count: 1
+    OvercloudCephStorage2Flavor: ceph2
+    CephStorage3Count: 1
+    OvercloudCephStorage3Flavor: ceph3
+
 
     NtpServer: ["clock.redhat.com","clock2.redhat.com"]
