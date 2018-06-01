@@ -5,15 +5,15 @@ source stackrc
 set -euxo pipefail
 cd $HOME
 
-RELEASE=pike
-THT="$HOME/tht-${RELEASE}"
+RELEASE=queens
+THT="/usr/share/openstack-tripleo-heat-templates"
 
 if [ -z "${NTP_SERVER:-}" ]; then
     echo "Set NTP_SERVER"
     exit 1
 fi
 
-openstack overcloud deploy \
+openstack overcloud upgrade converge \
     --templates $THT \
     --libvirt-type qemu \
     -e $THT/environments/docker.yaml \
