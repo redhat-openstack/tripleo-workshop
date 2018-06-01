@@ -256,7 +256,7 @@ Set up the virtual baremetal lab
    ::
 
      systemctl daemon-reload
-     sudo systemctl enable dhcrelay.service
+     systemctl enable dhcrelay.service
      systemctl start dhcrelay.service
      systemctl status dhcrelay.service
 

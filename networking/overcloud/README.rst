@@ -54,7 +54,7 @@ tripleo-workshop - networking - Overcloud Installation
 
    ::
 
-     openstack overcloud container image upload --verbose --config-file /home/stack/container_images.yaml
+     openstack overcloud container image upload --verbose --config-file /home/stack/templates/overcloud_containers.yaml
 
 #. Workaround for `bug: #1772124 <https://bugs.launchpad.net/tripleo/+bug/1772124>`_
 
@@ -69,6 +69,12 @@ tripleo-workshop - networking - Overcloud Installation
 
      sudo sed -i s/ExternalNetName/External1NetName/ \
          /usr/share/openstack-tripleo-heat-templates/puppet/all-nodes-config.j2.yaml
+
+#. Install playbooks for ceph-ansible deploy
+
+   ::
+
+     sudo yum install -y ceph-ansible
 
 #. Deploy the overcloud
 

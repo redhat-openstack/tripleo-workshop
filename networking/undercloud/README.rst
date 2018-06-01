@@ -50,7 +50,7 @@ Install undercloud
      dhcp_start = 172.20.0.10
      dhcp_end = 172.20.0.29
      inspection_iprange = 172.20.0.30,172.20.0.49
-     masquerade = true
+     masquerade = false
 
      [ctlplane1]
      cidr = 172.20.0.64/26
@@ -58,7 +58,7 @@ Install undercloud
      dhcp_start = 172.20.0.80
      dhcp_end = 172.20.0.99
      inspection_iprange = 172.20.0.100,172.20.0.119
-     masquerade = true
+     masquerade = false
 
      [ctlplane2]
      cidr = 172.20.0.128/26
@@ -66,7 +66,7 @@ Install undercloud
      dhcp_start = 172.20.0.140
      dhcp_end = 172.20.0.159
      inspection_iprange = 172.20.0.170,172.20.0.189
-     masquerade = true
+     masquerade = false
 
      [ctlplane3]
      cidr = 172.20.0.192/26
@@ -74,7 +74,7 @@ Install undercloud
      dhcp_start = 172.20.0.200
      dhcp_end = 172.20.0.219
      inspection_iprange = 172.20.0.230,172.20.0.249
-     masquerade = true
+     masquerade = false
 
 #. Build overcloud images and upload them in undercloud
 

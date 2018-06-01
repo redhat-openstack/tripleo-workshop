@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <direct>
+
+ [ <chain ipv="ipv4" table="nat" chain="overcloud_masquerade"/> ]
+ [ <rule ipv="ipv4" table="nat" chain="POSTROUTING" priority="0"> -j overcloud_masquerade </rule> ]
+ [ <rule ipv="ipv4" table="nat" chain="overcloud_masquerade" priority="0"> -s 172.20.0.0/16 -d 172.20.0.0/16 -j RETURN </rule> ]
+ [ <rule ipv="ipv4" table="nat" chain="overcloud_masquerade" priority="0"> -s 172.20.0.0/16 -j MASQUERADE </rule> ]
+
  [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane0 -j ACCEPT </rule> ]
  [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane1 -j ACCEPT </rule> ]
  [ <rule ipv="ipv4" table="filter" chain="FORWARD" priority="0"> -i ctlplane2 -j ACCEPT </rule> ]
