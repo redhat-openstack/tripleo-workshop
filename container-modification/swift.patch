@@ -1,7 +1,7 @@
-diff --git a/swift/common/utils.py b/swift/common/utils.py
+diff --git a/common/utils.py b/common/utils.py
 index 197e189..e48d5dd 100644
---- a/swift/common/utils.py
-+++ b/swift/common/utils.py
+--- a/common/utils.py
++++ b/common/utils.py
 @@ -312,6 +312,9 @@ def get_swift_info(admin=False, disallowed_sections=None):
      if admin:
          info['admin'] = dict(_swift_admin_info)

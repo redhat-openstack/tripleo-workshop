@@ -10,7 +10,7 @@ ssh-keygen
 ###############################################################################
 echo "Install TripleO Repos"
 {
-yum -y install https://trunk.rdoproject.org/centos7/current/python2-tripleo-repos-0.0.1-0.20180418175107.ef4e12e.el7.centos.noarch.rpm
+yum -y install https://trunk.rdoproject.org/centos7/current/python2-tripleo-repos-0.0.1-0.20180418175107.ef4e12e.el7.centos.noarch.rpm || true
 tripleo-repos -b queens current ceph
 }  >> express.log
 
@@ -34,7 +34,7 @@ EOF
 
 modprobe -r kvm_intel
 modprobe kvm_intel
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Compile and install dhcrelay from ics-dhcp."
@@ -48,13 +48,13 @@ sudo -u devuser ./configure --prefix=/usr/local
 sudo -u devuser make
 make install
 cd ~
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Cloning lab from git repo"
 {
 git clone https://github.com/redhat-openstack/tripleo-workshop.git
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Deploy the config files"
@@ -68,7 +68,7 @@ echo "Restart networking and Firewall"
 {
 systemctl restart network
 systemctl restart firewalld
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Enable IP Routing"
@@ -78,7 +78,7 @@ net.ipv4.ip_forward = 1
 EOF
 
 sysctl --system
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Enable dhcp relay service on ctlplane networks."
@@ -87,7 +87,7 @@ systemctl daemon-reload
 systemctl enable dhcrelay.service
 systemctl start dhcrelay.service
 systemctl status dhcrelay.service
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Create libvirt networks."
@@ -97,7 +97,7 @@ systemctl status libvirtd.service || systemctl restart libvirtd.service
 cd /root/tripleo-workshop/networking/virtual-baremetal-lab/libvirt/networks/
 bash create_networks.sh
 cd ~
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Create disks for vms."
@@ -130,16 +130,16 @@ qemu-img create -f qcow2 -o preallocation=metadata overcloud-ceph3-0-osd2.qcow2 
 qemu-img create -f qcow2 -o preallocation=metadata overcloud-ceph3-0-osd3.qcow2 20G
 
 cd ~
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Create overcloud vms."
-}
+{
 cd /root/tripleo-workshop/networking/virtual-baremetal-lab/libvirt/vms
 bash create_vms.sh
 
 cd ~
-}  >> express.log
+}  >> express.log 2>&1
 
 ###############################################################################
 echo "Configure virtual BMC for overcloud nodes."
@@ -163,7 +163,7 @@ vbmc start overcloud-compute3-0
 vbmc start overcloud-ceph1-0
 vbmc start overcloud-ceph2-0
 vbmc start overcloud-ceph3-0
-}  >> express.log
+}  >> express.log 2>&1
 vbmc list
 
 
@@ -188,7 +188,7 @@ virt-resize --expand /dev/sda1 CentOS-7-x86_64-GenericCloud.qcow2 undercloud.qco
 
 # Set the root password
 virt-customize -a undercloud.qcow2 --root-password password:Redhat01
-}  >> express.log
+}  >> express.log 2>&1
 
 # Create config drive
 
@@ -221,17 +221,17 @@ virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
 --network network:default \
 --network network:ctlplane,portgroup=ctlplane0 \
 --name undercloud
-}  >> express.log
+}  >> express.log 2>&1
 
 # Get the IP address of the undercloud
+sleep 30
 undercloudip=$(virsh domifaddr undercloud | grep ipv4 | awk '{ print $4 }' | cut --fields=1 --delimiter='/')
 echo "$undercloudip undercloud.example.com undercloud" >> /etc/hosts
 
 echo "########################################################################"
 echo "# DONE"
 echo "#"
-echo "# ssh root@undercloud.example.com  <-- To continue undercloud setup"
-#ssh root@undercloud.example.com
+echo "# To get the undercloud ip - run: virsh domifaddr undercloud "
 
 
 
