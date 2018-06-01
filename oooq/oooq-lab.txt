@@ -40,8 +40,12 @@ You should get the following VMs:
 1 compute
 3 ceph storage nodes
 
-5. Fetch all containers
-Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and run overcloud-prep-containers.sh
+5. Fetch all containers and generate a fencing.yaml
+Log on the undercloud (ssh -F ~/.quickstart/ssh.config.ansible undercloud) and run:
+overcloud-prep-containers.sh
+openstack overcloud generate fencing --ipmi-lanplus instackenv.json --output fencing.yaml
+
+Also add '-e /home/stack/fencing.yaml' to the overcloud-deploy.sh script.
 
 6. Deploy the overcloud:
 Run ./overcloud-deploy.sh.
@@ -52,7 +56,7 @@ It will fail because the default tags used by quickstart.sh do not create
 How on earth am I supposed to know which tags quickstart.sh will run?
 ./quickstart.sh --dry-run ...
 
-7. Let's execute only that step:
+7. Let's execute only that step only:
 ./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-prep-config' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
 
 By adding --retain-inventory and --teardown none we force it to reuse the work done until now.
@@ -61,7 +65,7 @@ Now we should have a network-environment.yaml created on the undercloud
 8. Retry the deployment via ./overcloud-deploy.sh
 Barring errors we should get a CREATE_COMPLETE
 
-A full successful deployment lasts around ~45mins
+A full successful deployment lasts around ~45mins. NB: If you check 'pcs status' the stonith devices will be stopped. why?
 
 9. Let's validate that VMs can actually start:
 ./quickstart.sh --retain-inventory --teardown none --tags 'overcloud-validate' -R queens --nodes nodes.yaml --config config.yaml 127.0.0.2
