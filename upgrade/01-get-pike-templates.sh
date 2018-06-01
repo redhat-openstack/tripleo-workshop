@@ -11,6 +11,8 @@ echo > basic-deployment.yaml 'resource_registry:
   OS::TripleO::Services::OsloMessagingNotify: OS::Heat::None
 
 parameter_defaults:
+  DnsServers: ["10.12.50.1"]
+
   ControllerImage: overcloud-full-pike
   controllerImage: overcloud-full-pike
   NovaImage: overcloud-full-pike
