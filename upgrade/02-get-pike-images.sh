@@ -6,9 +6,12 @@ cd $HOME
 RELEASE=pike
 THT="$HOME/tht-${RELEASE}"
 
+IMAGE_LOCATION="http://10.12.50.1/pub/tripleo-masterclass/pike-tripleo/overcloud-full.tar"
+# IMAGE_LOCATION="https://images.rdoproject.org/pike/delorean/current-tripleo/overcloud-full.tar"
+
 mkdir overcloud-full-pike
 pushd overcloud-full-pike
-curl -O https://images.rdoproject.org/pike/delorean/current-tripleo/overcloud-full.tar
+curl -O "$IMAGE_LOCATION"
 tar -xvf overcloud-full.tar
 mv overcloud-full{,-pike}.qcow2
 mv overcloud-full{,-pike}.initrd
