@@ -16,6 +16,12 @@ yum install ceph-ansible
 bash deploy-ceph.sh
 ```
 
+4. Become root on the undercloud and execute the following:
+```
+sudo tail -f /var/log/mistral/ceph-install-workflow.log
+```
+The above file will not exist until Step 2 of the deployment
+
 ## Part 2
 
 1. Read [deploy-ceph.sh](deploy-ceph.sh)
@@ -29,9 +35,27 @@ bash deploy-ceph.sh
 
 ## Part 3
 
+1. Execute the following on the undercloud as root and take note of
+the last directory returned by the command; it will be the newest directory.
+```
+ls -lhtr /tmp/
+```
+
+2. Change into the directory returned from the previous command. E.g.
+```
+cd /tmp/ansible-mistral-actionVoB_Q8
+```
+3. Explore the directory
+   - What is in inventory.yaml?
+   - How was the playbook executed?
+
+The above directory is created by Mistral when it runs ceph-ansible. The same Mistral workflow will also delete it unless `CephAnsiblePlaybookVerbosity` has been set to a value between 1 and 5 as done in [ceph.yaml](ceph.yaml).
+
+## Part 4
+
 Only do this if your deployment is finished.
 
-1. Validate the overcloud as described in the last step of the oooq lab [../oooq/oooq-lab.txt](../oooq/oooq-lab.txt).
+1. Validate the overcloud as described in the last step of the oooq lab ([../oooq/oooq-lab.txt](../oooq/oooq-lab.txt)).
 
 2. SSH into an overcloud controller and run the following as root to answer their respective questions
    - `docker ps | grep ceph` which containers are running?
