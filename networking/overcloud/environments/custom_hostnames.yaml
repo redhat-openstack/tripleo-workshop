@@ -1,0 +1,12 @@
+#------------------------------------------------------------------------------
+# In combination with the custom placement configuration (scheduler_hints) , it
+# is also possible to assign a specific baremetal node a custom hostname. This
+# may be used to denote where a system is located (e.g. rack2-row12), to make
+# the hostname match an inventory identifier, or any other situation where a
+# custom hostname is desired.
+#------------------------------------------------------------------------------
+parameter_defaults:
+  HostnameMap:
+    overcloud-controller1-0: barn-owl
+    overcloud-controller1-1: little-owl
+    overcloud-controller1-2: hawk-owl

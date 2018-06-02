@@ -15,66 +15,42 @@ Install undercloud
      ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
      EOF
 
-
 #. Reference the
    `documentation <https://docs.openstack.org/tripleo-docs/latest/install/installation/installation.html>`_
-   and install stable/queens undercloud.
+   and install stable/queens python-tripleoclient.
 
-   Use the following undercloud configuration (``undercloud.conf``)::
+   ::
 
-     [DEFAULT]
+     useradd stack
+     passwd stack
 
-     undercloud_hostname = undercloud.example.com
-     local_ip = 172.20.0.1/26
-     undercloud_public_host = 172.20.0.2
-     undercloud_admin_host = 172.20.0.3
-     # Change if this is not the libvirt default virbr0 interface ip
-     undercloud_nameservers = 192.168.122.1
-     undercloud_ntp_servers = 0.cz.pool.ntp.org,1.cz.pool.ntp.org
+     echo "stack ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/stack
+     chmod 0440 /etc/sudoers.d/stack
 
-     subnets = ctlplane0,ctlplane1,ctlplane2,ctlplane3
-     local_subnet = ctlplane0
+     su - stack
 
-     local_interface = eth1
-     local_mtu = 1500
-     inspection_interface = br-ctlplane
-     scheduler_max_attempts = 3
-     enable_routed_networks = true
+     sudo yum -y install https://trunk.rdoproject.org/centos7/current/python2-tripleo-repos-0.0.1-0.20180418175107.ef4e12e.el7.centos.noarch.rpm
+     sudo -E tripleo-repos -b queens current ceph
 
-     # Comment this if not using a docker registry mirror
-     docker_registry_mirror = http://10.12.50.1:5000
+     sudo yum install -y python-tripleoclient
 
-     [ctlplane0]
-     cidr = 172.20.0.0/26
-     gateway = 172.20.0.62
-     dhcp_start = 172.20.0.10
-     dhcp_end = 172.20.0.29
-     inspection_iprange = 172.20.0.30,172.20.0.49
-     masquerade = false
+#. Clone the git repo
 
-     [ctlplane1]
-     cidr = 172.20.0.64/26
-     gateway = 172.20.0.126
-     dhcp_start = 172.20.0.80
-     dhcp_end = 172.20.0.99
-     inspection_iprange = 172.20.0.100,172.20.0.119
-     masquerade = false
+   ::
 
-     [ctlplane2]
-     cidr = 172.20.0.128/26
-     gateway = 172.20.0.190
-     dhcp_start = 172.20.0.140
-     dhcp_end = 172.20.0.159
-     inspection_iprange = 172.20.0.170,172.20.0.189
-     masquerade = false
+     git clone https://github.com/redhat-openstack/tripleo-workshop.git
 
-     [ctlplane3]
-     cidr = 172.20.0.192/26
-     gateway = 172.20.0.254
-     dhcp_start = 172.20.0.200
-     dhcp_end = 172.20.0.219
-     inspection_iprange = 172.20.0.230,172.20.0.249
-     masquerade = false
+#. Copy the undercloud configuration file from the git repo
+
+   ::
+
+     cp ./tripleo-workshop/networking/undercloud/undercloud.conf .
+
+#. Install the undercloud
+
+   ::
+
+     openstack undercloud install
 
 #. Build overcloud images and upload them in undercloud
 

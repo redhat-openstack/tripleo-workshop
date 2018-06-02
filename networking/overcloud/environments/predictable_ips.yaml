@@ -1,0 +1,56 @@
+resource_registry:
+  #
+  # ISSUE: This does not work for custom networks.
+  #
+  #      The templates are rendered under tripleoclient temp dir in /tmp
+  #      How to specify the correct path to the from_pool.yaml ?
+  #
+  OS::TripleO::Controller1::Ports::External1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/external1_from_pool.yaml
+  OS::TripleO::Controller1::Ports::InternalApi1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api1_from_pool.yaml
+  OS::TripleO::Controller1::Ports::Storage1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/storage1_from_pool.yaml
+  OS::TripleO::Controller1::Ports::StorageMgmt1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt1_from_pool.yaml
+  OS::TripleO::Controller1::Ports::Tenant1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant1_from_pool.yaml
+
+parameter_defaults:
+  #----------------------------------------------------------------------------
+  # Predictable Virtual IPs (VIPs) for services.
+  # These IPs MUST come from outside their allocation range to prevent
+  # conflicts.
+  #----------------------------------------------------------------------------
+  ControlFixedIPs: [{'ip_address':'172.20.0.65'}]
+  InternalApi1VirtualFixedIPs: [{'ip_address':'172.20.1.65'}]
+  External1VirtualFixedIPs: [{'ip_address':'172.20.2.65'}]
+  Storage1VirtualFixedIPs: [{'ip_address':'172.20.3.65'}]
+  StorageMgmt1VirtualFixedIPs: [{'ip_address':'172.20.4.65'}]
+  RedisVirtualFixedIPs: [{'ip_address':'172.20.1.66'}]
+
+  #----------------------------------------------------------------------------
+  # {role.name}IPs
+  # Each parameter is a map of network names to a list of addresses. Each
+  # network must have at least as many addresses as there will be nodes on that
+  # network. The addresses will be assigned in order, so the first node of each
+  # type will get the first address in each of the lists, the second node will
+  # get the second address in each of the lists, and so on.
+  #----------------------------------------------------------------------------
+  Controller1IPs:
+    # Each controller will get an IP from the lists below, first controller, first IP
+    external1:
+    - 172.20.2.100
+    - 172.20.2.101
+    - 172.20.2.102
+    internal_api1:
+    - 172.20.1.100
+    - 172.20.1.101
+    - 172.20.1.102
+    storage1:
+    - 172.20.3.100
+    - 172.20.3.101
+    - 172.20.3.102
+    storage_mgmt1:
+    - 172.20.4.100
+    - 172.20.4.101
+    - 172.20.4.102
+    tenant1:
+    - 172.20.5.100
+    - 172.20.5.101
+    - 172.20.5.102

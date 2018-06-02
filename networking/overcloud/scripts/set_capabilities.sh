@@ -2,9 +2,9 @@
 
 source /home/stack/stackrc
 
-openstack baremetal node set --property capabilities='profile:control1,boot_option:local' overcloud-controller-0
-openstack baremetal node set --property capabilities='profile:control1,boot_option:local' overcloud-controller-1
-openstack baremetal node set --property capabilities='profile:control1,boot_option:local' overcloud-controller-2
+openstack baremetal node set --property capabilities='profile:control1,node:controller1-0,boot_option:local' overcloud-controller-0
+openstack baremetal node set --property capabilities='profile:control1,node:controller1-1,boot_option:local' overcloud-controller-1
+openstack baremetal node set --property capabilities='profile:control1,node:controller1-2,boot_option:local' overcloud-controller-2
 
 openstack baremetal node set --property capabilities='profile:compute1,boot_option:local' overcloud-compute1-0
 openstack baremetal node set --property capabilities='profile:compute2,boot_option:local' overcloud-compute2-0

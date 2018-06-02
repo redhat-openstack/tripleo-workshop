@@ -1,0 +1,9 @@
+#------------------------------------------------------------------------------
+# For custom roles (defined via roles_data.yaml) the parameter will be named
+# RoleNameSchedulerHints, where RoleName is the name specified in
+# roles_data.yaml.
+#------------------------------------------------------------------------------
+
+parameter_defaults:
+  Controller1SchedulerHints:
+    'capabilities:node': 'controller1-%index%'

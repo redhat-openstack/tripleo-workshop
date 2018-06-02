@@ -1,13 +1,7 @@
 tripleo-workshop - networking - Overcloud Installation
 ######################################################
 
-#. Clone the git repo
-
-   ::
-
-     git clone https://github.com/redhat-openstack/tripleo-workshop.git
-
-#. Copy templates, roles, environments and scripts from git repo
+#. Copy templates, roles, environments and scripts from the git repo
 
    scp -r ./tripleo-workshop/networking/overcloud/* /home/stack/
 
@@ -30,6 +24,12 @@ tripleo-workshop - networking - Overcloud Installation
      bash ./scripts/set_bm_port_physnet.sh
 
 
+#. Provide (make available) all baremetal nodes
+
+   ::
+
+     openstack overcloud node provide --all-manageable
+
 #. Create roles data
 
    ::
@@ -49,12 +49,6 @@ tripleo-workshop - networking - Overcloud Installation
        --tag-from-label rdo_version \
        --output-env-file /home/stack/environments/docker_registry.yaml \
        --output-images-file /home/stack/templates/overcloud_containers.yaml
-
-#. Upload Docker images
-
-   ::
-
-     openstack overcloud container image upload --verbose --config-file /home/stack/templates/overcloud_containers.yaml
 
 #. Workaround for `bug: #1772124 <https://bugs.launchpad.net/tripleo/+bug/1772124>`_
 
