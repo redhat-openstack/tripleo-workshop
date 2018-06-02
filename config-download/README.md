@@ -20,10 +20,10 @@ To appreciate the difference of the above, we'll do a two-node
 deployment but instead of having Mistral execute the last two steps, 
 we will pass the tripleo client options so that we run them manually.
 
-To complete the lab read and run deploy.sh. Answer the optional
-questions to test your understanding.
+To complete the lab read and run [deploy-config-download.sh](deploy-config-download.sh) 
+Answer the optional questions to test your understanding.
 
-- Read [deploy.sh](deploy.sh) and execute it so that only the HEAT section runs
+- Read [deploy-config-download.sh](deploy-config-download.sh) and execute it so that only the HEAT section runs
 - While the deployment is running, observe the difference between the Queens and Master (Rocky) versions:
   - In Queens what does '--config-download' do?
   - In Queens what does config-download-environment.yaml do?

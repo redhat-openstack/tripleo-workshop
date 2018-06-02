@@ -4,11 +4,14 @@ set -euxo pipefail
 cd $HOME
 
 RELEASE=pike
-THT="$HOME/tht-pike"
+THT="$HOME/tht-${RELEASE}"
+
+IMAGE_LOCATION="http://10.12.50.1/pub/tripleo-masterclass/pike-tripleo/overcloud-full.tar"
+# IMAGE_LOCATION="https://images.rdoproject.org/pike/delorean/current-tripleo/overcloud-full.tar"
 
 mkdir overcloud-full-pike
 pushd overcloud-full-pike
-curl -O https://images.rdoproject.org/pike/delorean/current-tripleo/overcloud-full.tar
+curl -O "$IMAGE_LOCATION"
 tar -xvf overcloud-full.tar
 mv overcloud-full{,-pike}.qcow2
 mv overcloud-full{,-pike}.initrd
@@ -25,19 +28,19 @@ openstack overcloud container image prepare \
   --namespace tripleo${RELEASE} \
   --tag current-tripleo \
   --push-destination 192.168.24.1:8787/tripleo${RELEASE} \
-  --output-images-file ~/pike-container-images.yaml \
+  --output-images-file ~/${RELEASE}-container-images.yaml \
   -e $THT/environments/docker.yaml \
   -e $THT/environments/docker-ha.yaml \
   -e basic-deployment.yaml \
 
 openstack overcloud container image upload \
   --debug \
-  --config-file ~/pike-container-images.yaml \
+  --config-file ~/${RELEASE}-container-images.yaml \
 
 openstack overcloud container image prepare \
   --namespace 192.168.24.1:8787/tripleo${RELEASE} \
   --tag current-tripleo \
-  --output-env-file ~/pike-container-params.yaml \
+  --output-env-file ~/${RELEASE}-container-params.yaml \
   -e $THT/environments/docker.yaml \
   -e $THT/environments/docker-ha.yaml \
   -e basic-deployment.yaml \
