@@ -66,6 +66,11 @@ Only do this if your deployment is finished.
    - `ceph df`
      - How much raw space does the cluster have?
 	 - How many pools are there?
+   - `ip a` and then `cat /etc/ceph/ceph.conf`
+     - What is the IP range of the of cluster network (the network used to rebalance data)?
+	 - What are the IPs of the Ceph mons (the network used to access Ceph)?
+	 - Why might we wish to isolate the network used to rebalance data?
+     - How do these networks map to the `network-environment.yaml` on the undercloud?
 
 3. SSH into a ceph-storage node and run the following as root to answer their respective questions
 	- `docker ps | grep ceph` which containers are running and how are they named? Do the names align with each OSDs disk?
