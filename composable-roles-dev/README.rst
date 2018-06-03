@@ -1,10 +1,9 @@
 A few examples using process templates for composable roles/custom networks
 ##############################################################################
 
-The tool to ``process-templates.py`` process templates in ``THT/tools/`` is
-handy when developing tripleo templates. It can be used to render the jinja
-templates into plain heat templates using ``roles_data.yaml`` and
-``network_data.yaml`` as input.
+The tool ``process-templates.py`` in ``THT/tools/`` is handy when developing
+tripleo templates. It can be used to render the jinja templates into plain heat
+templates using ``roles_data.yaml`` and ``network_data.yaml`` as input.
 
 It is also very useful to get a baseline to customize. Notice how it renders
 the ``nic-config`` files for ``multiple-nics``, ``bond-with-vlans``,
@@ -57,6 +56,10 @@ hand editing them to get to something that works with the exact env.)
      mkdir tht-processed
      git clone https://github.com/redhat-openstack/tripleo-workshop.git
      git clone https://git.openstack.org/openstack/tripleo-heat-templates
+     cd /tmp/tripleo-heat-templates
+     git checkout -t origin/stable/queens
+     cd /tmp
+
      python ./tripleo-heat-templates/tools/process-templates.py \
        --base_path  /tmp/tripleo-heat-templates \
        --roles-data /tmp/tripleo-workshop/networking/overcloud/roles/Controller1.yaml \
@@ -64,19 +67,31 @@ hand editing them to get to something that works with the exact env.)
 
 #. Have a look at some of the files rendered
 
-   #. Controller1 Role
+   #. Controller1 Role NIC templates
 
       ::
 
         less /tmp/tripleo-heat-templates/network/config/multiple-nics/controller1.yaml
 
-   #. Network environment::
+        less /tmp/tripleo-heat-templates/network/config/multiple-nics/controller1.yaml
+
+        less /tmp/tripleo-heat-templates/network/config/single-nic-linux-bridge-vlans/controller1.yaml
+
+        less /tmp/tripleo-heat-templates/network/config/single-nic-vlans/controller1.yaml
+
+
+
+   #. Network environment for IPv4 and for IPv6::
 
         less /tmp/tripleo-heat-templates/environments/network-environment.yaml
+        less /tmp/tripleo-heat-templates/environments/network-environment-v6.yaml
 
-   #. network config for multiple-nics::
 
-        less /tmp/tripleo-heat-templates/network/config/multiple-nics/controller1.yaml
+   #. The Controller1 role templates
+
+      ::
+
+         less /tmp/tripleo-heat-templates/puppet/controller1-role.yaml
 
 #. Clean up rendered files
 
