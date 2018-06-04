@@ -349,7 +349,7 @@ Set up the virtual baremetal lab
              nodes.
              ::
 
-               sed -i s/192.168.122.1/<libvirt-bridge-ip>/instackenv.json
+               sed -i s/192.168.122.1/<libvirt-bridge-ip>/ instackenv.json
 
 #. Create undercloud vm.
 
