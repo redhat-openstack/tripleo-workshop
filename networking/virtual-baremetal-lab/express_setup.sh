@@ -181,13 +181,13 @@ curl -O http://10.12.50.1/pub/tripleo-masterclass/CentOS-7-x86_64-GenericCloud.q
 unxz CentOS-7-x86_64-GenericCloud.qcow2.xz
 
 # Create a new image for undercloud
-qemu-img create -f qcow2 undercloud.qcow2 40G
+qemu-img create -f qcow2 netlab-undercloud.qcow2 40G
 
 # Clone and resize the CentOS cloud image to our 40G undercloud image
-virt-resize --expand /dev/sda1 CentOS-7-x86_64-GenericCloud.qcow2 undercloud.qcow2
+virt-resize --expand /dev/sda1 CentOS-7-x86_64-GenericCloud.qcow2 netlab-undercloud.qcow2
 
 # Set the root password
-virt-customize -a undercloud.qcow2 --root-password password:Redhat01
+virt-customize -a netlab-undercloud.qcow2 --root-password password:Redhat01
 }  >> express.log 2>&1
 
 # Create config drive
@@ -210,17 +210,17 @@ ssh_authorized_keys:
 EOF
 
 {
-genisoimage -o undercloud-config.iso -V cidata -r \
+genisoimage -o netlab-undercloud-config.iso -V cidata -r \
   -J /tmp/cloud-init-data/meta-data /tmp/cloud-init-data/user-data
 
 # Launch the undercloud vm
 virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
---disk path=/var/lib/libvirt/images/undercloud.qcow2,device=disk,bus=virtio,format=qcow2 \
---disk path=/var/lib/libvirt/images/undercloud-config.iso,device=cdrom \
+--disk path=/var/lib/libvirt/images/netlab-undercloud.qcow2,device=disk,bus=virtio,format=qcow2 \
+--disk path=/var/lib/libvirt/images/netlab-undercloud-config.iso,device=cdrom \
 --import --noautoconsole --vnc \
 --network network:default \
 --network network:ctlplane,portgroup=ctlplane0 \
---name undercloud
+--name netlab-undercloud
 }  >> express.log 2>&1
 
 # Get the IP address of the undercloud
@@ -231,7 +231,7 @@ virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
 echo "########################################################################"
 echo "# DONE"
 echo "#"
-echo "# To get the undercloud ip - run: virsh domifaddr undercloud "
+echo "# To get the undercloud ip - run: virsh domifaddr netlab-undercloud "
 
 
 

@@ -402,13 +402,13 @@ Set up the virtual baremetal lab
        - $(cat ~/.ssh/id_rsa.pub)
      EOF
 
-     genisoimage -o undercloud-config.iso -V cidata -r \
+     genisoimage -o netlab- undercloud-config.iso -V cidata -r \
        -J /tmp/cloud-init-data/meta-data /tmp/cloud-init-data/user-data
 
      # Launch the undercloud vm
      virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
-     --disk path=/var/lib/libvirt/images/undercloud.qcow2,device=disk,bus=virtio,format=qcow2 \
-     --disk path=/var/lib/libvirt/images/undercloud-config.iso,device=cdrom \
+     --disk path=/var/lib/libvirt/images/netlab-undercloud.qcow2,device=disk,bus=virtio,format=qcow2 \
+     --disk path=/var/lib/libvirt/images/netlab-undercloud-config.iso,device=cdrom \
      --import --noautoconsole --vnc \
      --network network:default \
      --network network:ctlplane,portgroup=ctlplane0 \
