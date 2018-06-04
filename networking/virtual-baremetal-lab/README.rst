@@ -402,7 +402,7 @@ Set up the virtual baremetal lab
        - $(cat ~/.ssh/id_rsa.pub)
      EOF
 
-     genisoimage -o netlab- undercloud-config.iso -V cidata -r \
+     genisoimage -o netlab-undercloud-config.iso -V cidata -r \
        -J /tmp/cloud-init-data/meta-data /tmp/cloud-init-data/user-data
 
      # Launch the undercloud vm
