@@ -4,8 +4,8 @@ set -e
 
 ###############################################################################
 echo "Generate ssh keys"
-ssh-keygen
-
+#ssh-keygen
+ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 
 ###############################################################################
 echo "Install TripleO Repos"
