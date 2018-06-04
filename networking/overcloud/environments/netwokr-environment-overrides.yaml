@@ -1,0 +1,93 @@
+parameter_defaults:
+    # -------------------------------------------------------------------------
+    # Control Plane subnet is used to get the VIPs,
+    #    VIPs need to be on same network as controllers.
+    # -------------------------------------------------------------------------
+    ControlPlaneSubnet: ctlplane1
+
+    # -------------------------------------------------------------------------
+    # Controller Node role - subnet mapping
+    # -------------------------------------------------------------------------
+    Controller1ControlPlaneSubnet: ctlplane1
+
+    # -------------------------------------------------------------------------
+    # Compute Node roles - subnet mapping
+    # -------------------------------------------------------------------------
+    Compute1ControlPlaneSubnet: ctlplane1
+    Compute2ControlPlaneSubnet: ctlplane2
+    Compute3ControlPlaneSubnet: ctlplane3
+
+    # -------------------------------------------------------------------------
+    # Ceph Node roles - subnet mapping
+    # -------------------------------------------------------------------------
+    CephStorage1ControlPlaneSubnet: ctlplane1
+    CephStorage2ControlPlaneSubnet: ctlplane2
+    CephStorage3ControlPlaneSubnet: ctlplane3
+
+    # -------------------------------------------------------------------------
+    # Control Plane route and ip subnet prefix for:
+    #     ctlplane0, ctlplane1, ctlplane2 and ctlplane3
+    # -------------------------------------------------------------------------
+    ControlPlane0DefaultRoute: 172.20.0.62
+    ControlPlane0SubnetCidr: '26'
+    ControlPlane1DefaultRoute: 172.20.0.126
+    ControlPlane1SubnetCidr: '26'
+    ControlPlane2DefaultRoute: 172.20.0.190
+    ControlPlane2SubnetCidr: '26'
+    ControlPlane3DefaultRoute: 172.20.0.254
+    ControlPlane3SubnetCidr: '26'
+
+    DnsServers:
+    - 10.12.50.1
+
+    # -------------------------------------------------------------------------
+    # EC2MetadataIp's
+    # -------------------------------------------------------------------------
+    # The metadata ip address for the leaf local
+    # to the undercloud is the main undercloud ip.
+    # For the remote (non-local) leafs, the routed
+    # network infra need a route to 169.254.169.254
+    # via routers to the undercloud main ip.
+    # -------------------------------------------------------------------------
+    ControlPlane0EC2MetadataIp: 172.20.0.1
+    ControlPlane1EC2MetadataIp:  172.20.0.126
+    ControlPlane2EC2MetadataIp:  172.20.0.190
+    ControlPlane3EC2MetadataIp:  172.20.0.254
+
+    # -------------------------------------------------------------------------
+    # Supernets
+    # -------------------------------------------------------------------------
+    # These are Supernet CIDR's used in the routing tables.
+    # Supernets allow a single routing table entry for multiple
+    # adjecent networks.
+    # -------------------------------------------------------------------------
+    ExternalSupernet: 172.20.2.0/26
+    InternalApiSupernet: 172.20.1.0/24
+    StorageSupernet: 172.20.3.0/24
+    StorageMgmtSupernet: 172.20.4.0/24
+    TenantSupernet: 172.20.5.0/24
+    CtlplaneSupernet: 172.20.0.0/24
+
+
+    NeutronBridgeMappings: datacentre:br-ex,tenant:br-isolated
+    NeutronExternalNetworkBridge: ''
+    NeutronNetworkType: vxlan
+    NeutronNetworkVLANRanges: tenant:1000:2000
+    NeutronTunnelTypes: vxlan
+
+resource_registry:
+    #--------------------------------------------------------------------------
+    # Controller Nodes
+    OS::TripleO::Controller1::Net::SoftwareConfig: /home/stack/templates/nic-config/control1.yaml
+    #--------------------------------------------------------------------------
+    # Ceph Storage Nodes
+    OS::TripleO::CephStorage0::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph0.yaml
+    OS::TripleO::CephStorage1::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph1.yaml
+    OS::TripleO::CephStorage2::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph2.yaml
+    OS::TripleO::CephStorage3::Net::SoftwareConfig: /home/stack/templates/nic-config/ceph3.yaml
+    #--------------------------------------------------------------------------
+    # Compute Nodes
+    OS::TripleO::Compute0::Net::SoftwareConfig: /home/stack/templates/nic-config/compute0.yaml
+    OS::TripleO::Compute1::Net::SoftwareConfig: /home/stack/templates/nic-config/compute1.yaml
+    OS::TripleO::Compute2::Net::SoftwareConfig: /home/stack/templates/nic-config/compute2.yaml
+    OS::TripleO::Compute3::Net::SoftwareConfig: /home/stack/templates/nic-config/compute3.yaml

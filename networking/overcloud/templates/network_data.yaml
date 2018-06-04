@@ -95,8 +95,8 @@
   name_lower: storage_mgmt0
   vip: false
   vlan: 640
-  ip_subnet: '172.16.4.0/26'
-  allocation_pools: [{'start': '172.16.4.10', 'end': '172.16.3.29'}]
+  ip_subnet: '172.20.4.0/26'
+  allocation_pools: [{'start': '172.20.4.10', 'end': '172.20.4.29'}]
   gateway_ip: '172.20.4.62'
   ipv6_subnet: 'fd00:fd00:fd00:4000::/64'
   ipv6_allocation_pools: [{'start': 'fd00:fd00:fd00:4000::10', 'end': 'fd00:fd00:fd00:4000:ffff:ffff:ffff:fffe'}]
@@ -104,8 +104,8 @@
   name_lower: storage_mgmt1
   vip: true
   vlan: 641
-  ip_subnet: '172.16.4.64/26'
-  allocation_pools: [{'start': '172.16.4.80', 'end': '172.16.3.99'}]
+  ip_subnet: '172.20.4.64/26'
+  allocation_pools: [{'start': '172.20.4.80', 'end': '172.20.4.99'}]
   gateway_ip: '172.20.4.126'
   ipv6_subnet: 'fd00:fd00:fd00:4001::/64'
   ipv6_allocation_pools: [{'start': 'fd00:fd00:fd00:4001::10', 'end': 'fd00:fd00:fd00:4001:ffff:ffff:ffff:fffe'}]
@@ -113,8 +113,8 @@
   name_lower: storage_mgmt2
   vip: false
   vlan: 642
-  ip_subnet: '172.16.4.128/26'
-  allocation_pools: [{'start': '172.16.4.140', 'end': '172.16.3.159'}]
+  ip_subnet: '172.20.4.128/26'
+  allocation_pools: [{'start': '172.20.4.140', 'end': '172.20.4.159'}]
   gateway_ip: '172.20.4.190'
   ipv6_subnet: 'fd00:fd00:fd00:4002::/64'
   ipv6_allocation_pools: [{'start': 'fd00:fd00:fd00:4002::10', 'end': 'fd00:fd00:fd00:4002:ffff:ffff:ffff:fffe'}]
@@ -122,8 +122,8 @@
   name_lower: storage_mgmt3
   vip: false
   vlan: 643
-  ip_subnet: '172.16.4.192/26'
-  allocation_pools: [{'start': '172.16.4.210', 'end': '172.16.3.229'}]
+  ip_subnet: '172.20.4.192/26'
+  allocation_pools: [{'start': '172.20.4.210', 'end': '172.20.4.229'}]
   gateway_ip: '172.20.4.254'
   ipv6_subnet: 'fd00:fd00:fd00:4003::/64'
   ipv6_allocation_pools: [{'start': 'fd00:fd00:fd00:4003::10', 'end': 'fd00:fd00:fd00:4003:ffff:ffff:ffff:fffe'}]

@@ -6,13 +6,6 @@ parameter_defaults:
     ControlPlaneSubnet: ctlplane1
 
     # -------------------------------------------------------------------------
-    # ExternalNetName is hardcoded in THT/puppet/all-nodes-config.j2.yaml
-    #
-    # -------------------------------------------------------------------------
-    ExternalNetName: External1
-
-
-    # -------------------------------------------------------------------------
     # Controller Node role - subnet mapping
     # -------------------------------------------------------------------------
     Controller1ControlPlaneSubnet: ctlplane1

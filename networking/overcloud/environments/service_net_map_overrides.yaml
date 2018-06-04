@@ -1,0 +1,72 @@
+parameter_defaults:
+    ServiceNetMap:
+        ApacheNetwork: internal_api1
+        NeutronTenantNetwork: tenant1
+        CeilometerApiNetwork: internal_api1
+        AodhApiNetwork: internal_api1
+        PankoApiNetwork: internal_api1
+        BarbicanApiNetwork: internal_api1
+        GnocchiApiNetwork: internal_api1
+        MongodbNetwork: internal_api1
+        CinderApiNetwork: internal_api1
+        CinderIscsiNetwork: storage1
+        CongressApiNetwork: internal_api1
+        GlanceApiNetwork: internal_api1
+        IronicApiNetwork: ctlplane
+        IronicNetwork: ctlplane
+        IronicInspectorNetwork: ctlplane
+        KeystoneAdminApiNetwork: ctlplane # allows undercloud to config endpoints
+        KeystonePublicApiNetwork: internal_api1
+        ManilaApiNetwork: internal_api1
+        NeutronApiNetwork: internal_api1
+        OctaviaApiNetwork: internal_api1
+        HeatApiNetwork: internal_api1
+        HeatApiCfnNetwork: internal_api1
+        HeatApiCloudwatchNetwork: internal_api1
+        NovaApiNetwork: internal_api1
+        NovaPlacementNetwork: internal_api1
+        NovaMetadataNetwork: internal_api1
+        NovaVncProxyNetwork: internal_api1
+        NovaLibvirtNetwork: internal_api1
+        NovajoinNetwork: internal_api1
+        Ec2ApiNetwork: internal_api1
+        Ec2ApiMetadataNetwork: internal_api1
+        TackerApiNetwork: internal_api1
+        SwiftStorageNetwork: storage_mgmt1
+        SwiftProxyNetwork: storage1
+        SaharaApiNetwork: internal_api1
+        HorizonNetwork: internal_api1
+        MemcachedNetwork: internal_api1
+        OsloMessagingRpcNetwork: internal_api1
+        OsloMessagingNotifyNetwork: internal_api1
+        RabbitmqNetwork: internal_api1
+        QdrNetwork: internal_api1
+        RedisNetwork: internal_api1
+        GaneshaNetwork: storage_nfs
+        MysqlNetwork: internal_api1
+        SnmpdNetwork: internal_api1
+        CephClusterNetwork: storage_mgmt
+        CephMonNetwork: storage1
+        CephRgwNetwork: storage1
+        PublicNetwork: external1
+        OpendaylightApiNetwork: internal_api1
+        OvnDbsNetwork: internal_api1
+        MistralApiNetwork: internal_api1
+        ZaqarApiNetwork: internal_api1
+        DockerRegistryNetwork: ctlplane
+        PacemakerRemoteNetwork: internal_api1
+        TripleoUINetwork: internal_api1
+        DesignateApiNetwork: internal_api1
+        # We special-case the default ResolveNetwork for the CephStorage role
+        # for backwards compatibility, all other roles default to internal_api
+        CephStorage1HostnameResolveNetwork: storage1
+        CephStorage2HostnameResolveNetwork: storage2
+        CephStorage3HostnameResolveNetwork: storage3
+        EtcdNetwork: internal_api
+        #{% for role in roles if role.name != 'CephStorage' %}
+        #   {{role.name}}HostnameResolveNetwork: internal_api
+        #{% endfor %}
+        Controller1HostnameResolveNetwork: internal_api1
+        Compute1HostnameResolveNetwork: internal_api1
+        Compute2HostnameResolveNetwork: internal_api2
+        Compute3HostnameResolveNetwork: internal_api3
