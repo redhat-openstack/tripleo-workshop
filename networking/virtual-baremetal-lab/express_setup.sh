@@ -224,9 +224,9 @@ virt-install --ram 16384 --vcpus 4 --os-variant centos7.0 \
 }  >> express.log 2>&1
 
 # Get the IP address of the undercloud
-sleep 30
-undercloudip=$(virsh domifaddr undercloud | grep ipv4 | awk '{ print $4 }' | cut --fields=1 --delimiter='/')
-echo "$undercloudip undercloud.example.com undercloud" >> /etc/hosts
+#sleep 30
+#undercloudip=$(virsh domifaddr undercloud | grep ipv4 | awk '{ print $4 }' | cut --fields=1 --delimiter='/')
+#echo "$undercloudip undercloud.example.com undercloud" >> /etc/hosts
 
 echo "########################################################################"
 echo "# DONE"
