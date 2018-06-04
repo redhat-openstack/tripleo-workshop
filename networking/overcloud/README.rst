@@ -76,4 +76,5 @@ tripleo-workshop - networking - Overcloud Installation
 
      time bash deploy_overcloud.sh
 
-
+   .. NOTE:: The deployment will fail. Try to figure it out. First on to
+             solve it can put the solution in the etherpad.

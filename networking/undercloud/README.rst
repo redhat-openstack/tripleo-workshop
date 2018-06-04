@@ -127,4 +127,7 @@ Install undercloud
 
      openstack overcloud node introspect --all-manageable
 
+   .. NOTE:: The introspection will fail. Try to figure it out. First on to
+             solve it can put the solution in the etherpad.
+
 #.  Move on to set up `overcloud <https://github.com/redhat-openstack/tripleo-workshop/tree/master/networking/overcloud>`_.
