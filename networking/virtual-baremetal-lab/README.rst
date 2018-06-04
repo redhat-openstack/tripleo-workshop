@@ -136,6 +136,17 @@ Libvirt networks
 Set up the virtual baremetal lab
 --------------------------------
 
+.. NOTE:: If the node was previously used to run quickstart. Make sure all
+          quickstart nodes are stopped.
+
+          ::
+
+            # Log in as root on the virt host
+            # Change to the stack user
+            su - stack
+            # destroy all running vms
+            for vm in $(virsh list --all | egrep 'running' | awk '{ print $2 }'); do virsh destroy $vm; done
+
 1. Generate ssh keys
 
    ::
