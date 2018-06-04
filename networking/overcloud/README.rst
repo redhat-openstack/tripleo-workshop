@@ -3,7 +3,9 @@ tripleo-workshop - networking - Overcloud Installation
 
 #. Copy templates, roles, environments and scripts from the git repo
 
-   scp -r ./tripleo-workshop/networking/overcloud/* /home/stack/
+   ::
+
+     scp -r ./tripleo-workshop/networking/overcloud/* /home/stack/
 
 #. Create flavors
 
