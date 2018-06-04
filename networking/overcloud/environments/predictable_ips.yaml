@@ -1,10 +1,4 @@
 resource_registry:
-  #
-  # ISSUE: This does not work for custom networks.
-  #
-  #      The templates are rendered under tripleoclient temp dir in /tmp
-  #      How to specify the correct path to the from_pool.yaml ?
-  #
   #  OS::TripleO::{role.name]::Ports::{network.name}Port : ../network/ports/{network.name_lower}_from_pool.yaml
   OS::TripleO::Controller1::Ports::External1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/external1_from_pool.yaml
   OS::TripleO::Controller1::Ports::InternalApi1Port: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api1_from_pool.yaml
