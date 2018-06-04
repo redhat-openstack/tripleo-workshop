@@ -146,6 +146,8 @@ Set up the virtual baremetal lab
             su - stack
             # destroy all running vms
             for vm in $(virsh list --all | egrep 'running' | awk '{ print $2 }'); do virsh destroy $vm; done
+            # Get back to root ...
+            exit
 
 1. Generate ssh keys
 
