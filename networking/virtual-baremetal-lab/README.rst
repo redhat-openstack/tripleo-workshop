@@ -375,13 +375,13 @@ Set up the virtual baremetal lab
      unxz CentOS-7-x86_64-GenericCloud.qcow2.xz
 
      # Create a new image for undercloud
-     qemu-img create -f qcow2 undercloud.qcow2 40G
+     qemu-img create -f qcow2 netlab-undercloud.qcow2 40G
 
      # Clone and resize the CentOS cloud image to our 40G undercloud image
-     virt-resize --expand /dev/sda1 CentOS-7-x86_64-GenericCloud.qcow2 undercloud.qcow2
+     virt-resize --expand /dev/sda1 CentOS-7-x86_64-GenericCloud.qcow2 netlab-undercloud.qcow2
 
      # Set the root password
-     virt-customize -a undercloud.qcow2 --root-password password:Redhat01
+     virt-customize -a netlab-undercloud.qcow2 --root-password password:Redhat01
 
      # Create config drive
 
@@ -412,11 +412,11 @@ Set up the virtual baremetal lab
      --import --noautoconsole --vnc \
      --network network:default \
      --network network:ctlplane,portgroup=ctlplane0 \
-     --name undercloud
+     --name netlab-undercloud
 
 
      # Get the IP address of the undercloud
-     virsh domifaddr undercloud
+     virsh domifaddr netlab-undercloud
 
 #. SSH to the undercloud
 
