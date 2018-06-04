@@ -9,15 +9,15 @@ VBMC_HOST = '192.168.122.1'
 VBMC_USER = 'admin'
 VBMC_PASSWORD = 'password'
 
-VBMC_PORT_MAP = {'overcloud-controller-0': 6230,
-                 'overcloud-controller-1': 6231,
-                 'overcloud-controller-2': 6232,
-                 'overcloud-compute1-0': 6233,
-                 'overcloud-compute2-0': 6234,
-                 'overcloud-compute3-0': 6235,
-                 'overcloud-ceph1-0': 6236,
-                 'overcloud-ceph2-0': 6237,
-                 'overcloud-ceph3-0': 6238}
+VBMC_PORT_MAP = {'overcloud-controller-0': 6240,
+                 'overcloud-controller-1': 6241,
+                 'overcloud-controller-2': 6242,
+                 'overcloud-compute1-0': 6243,
+                 'overcloud-compute2-0': 6244,
+                 'overcloud-compute3-0': 6245,
+                 'overcloud-ceph1-0': 6246,
+                 'overcloud-ceph2-0': 6247,
+                 'overcloud-ceph3-0': 6248}
 
 instackenv = {'nodes': []}
 nodes = instackenv['nodes']

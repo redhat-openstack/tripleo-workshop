@@ -144,15 +144,15 @@ cd ~
 ###############################################################################
 echo "Configure virtual BMC for overcloud nodes."
 {
-vbmc add --username admin --password password --port 6230 overcloud-controller-0
-vbmc add --username admin --password password --port 6231 overcloud-controller-1
-vbmc add --username admin --password password --port 6232 overcloud-controller-2
-vbmc add --username admin --password password --port 6233 overcloud-compute1-0
-vbmc add --username admin --password password --port 6234 overcloud-compute2-0
-vbmc add --username admin --password password --port 6235 overcloud-compute3-0
-vbmc add --username admin --password password --port 6236 overcloud-ceph1-0
-vbmc add --username admin --password password --port 6237 overcloud-ceph2-0
-vbmc add --username admin --password password --port 6238 overcloud-ceph3-0
+vbmc add --username admin --password password --port 6240 overcloud-controller-0
+vbmc add --username admin --password password --port 6241 overcloud-controller-1
+vbmc add --username admin --password password --port 6242 overcloud-controller-2
+vbmc add --username admin --password password --port 6243 overcloud-compute1-0
+vbmc add --username admin --password password --port 6244 overcloud-compute2-0
+vbmc add --username admin --password password --port 6245 overcloud-compute3-0
+vbmc add --username admin --password password --port 6246 overcloud-ceph1-0
+vbmc add --username admin --password password --port 6247 overcloud-ceph2-0
+vbmc add --username admin --password password --port 6248 overcloud-ceph3-0
 
 vbmc start overcloud-controller-0
 vbmc start overcloud-controller-1
