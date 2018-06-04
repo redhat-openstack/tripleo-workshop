@@ -7,7 +7,7 @@ echo "Redhat123" | passwd --stdin oooq
 echo "oooq ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/oooq
 sudo chmod 0440 /etc/sudoers.d/oooq
 
-yum install -y tmux vim libguestfs-tools
+yum install -y tmux vim libguestfs-tools wget
 
 # Due to https://bugzilla.redhat.com/show_bug.cgi?id=1581364 libvirt issue
 mkdir rpms; pushd rpms
