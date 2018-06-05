@@ -73,6 +73,6 @@
  [ <rule ipv="ipv4" table="filter" chain="INPUT" priority="0"> -i ctlplane2 -p udp -m udp --dport 67:68 --sport 67:68 -j ACCEPT </rule> ]
  [ <rule ipv="ipv4" table="filter" chain="INPUT" priority="0"> -i ctlplane3 -p udp -m udp --dport 67:68 --sport 67:68 -j ACCEPT </rule> ]
 
- [ <rule ipv="ipv4" table="filter" chain="INPUT" priority="0"> -p udp -m udp -m multiport --dports 6230:6238 -j ACCEPT </rule> ]
+ [ <rule ipv="ipv4" table="filter" chain="INPUT" priority="0"> -p udp -m udp -m multiport --dports 6240:6248 -j ACCEPT </rule> ]
 </direct>
 
