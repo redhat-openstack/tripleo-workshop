@@ -68,6 +68,7 @@ parameter_defaults:
     TenantSupernet: 172.20.5.0/24
     CtlplaneSupernet: 172.20.0.0/24
 
+    Storage3NetworkVlanID: 639
 
     NeutronBridgeMappings: datacentre:br-ex,tenant:br-isolated
     NeutronExternalNetworkBridge: ''
