@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source stackrc
+source ~/stackrc
 
 set -euxo pipefail
 cd $HOME

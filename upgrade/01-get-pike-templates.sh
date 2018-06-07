@@ -43,8 +43,7 @@ parameter_defaults:
     - OS::TripleO::Services::NovaPlacement
     - OS::TripleO::Services::NovaScheduler
     - OS::TripleO::Services::Ntp
-    - OS::TripleO::Services::OsloMessagingNotify
-    - OS::TripleO::Services::OsloMessagingRpc
+    - OS::TripleO::Services::RabbitMQ
     - OS::TripleO::Services::Pacemaker
     - OS::TripleO::Services::Sshd
     - OS::TripleO::Services::SwiftProxy
